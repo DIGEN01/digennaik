@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digen Naik — Business Analyst & Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050a0e;
+    --bg2: #0b1219;
+    --bg3: #111c27;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e8f4f8;
+    --muted: #7a9baf;
+    --border: rgba(0,229,255,0.12);
+    --font: 'Space Grotesk', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(0,229,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* Parallax canvas - fixed, moves via JS transform */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  /* Parallax glow blobs */
+  .glow-blob {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(100px);
+    opacity: 0.12;
+    will-change: transform;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5,10,14,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0; right: 100%;
+    height: 1px;
+    background: var(--accent);
+    transition: right 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { right: 0; }
+
+  /* All sections sit above canvas */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 0 3rem;
+  }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 5rem;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+    min-height: 1.2em;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 0.75rem;
+  }
+  .hero-name {
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-name .line2 {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--accent);
+    color: #050a0e;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border);
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+
+
+  /* Section helpers */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+  .section-title span { color: var(--accent); }
+  .section-divider { width: 100%; height: 1px; background: var(--border); max-width: 1100px; margin: 0 auto; }
+
+  /* About */
+  #about { padding-top: 8rem; padding-bottom: 8rem; }
+  .about-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text p { color: var(--muted); line-height: 1.8; font-size: 1.02rem; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .about-right { display: flex; flex-direction: column; gap: 1.5rem; }
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .skill-tag {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--bg2);
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.05); transform: translateY(-1px); }
+
+  /* Projects */
+  #projects { padding-top: 8rem; padding-bottom: 8rem; }
+  .projects-inner { max-width: 1100px; margin: 0 auto; }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: none;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .project-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); background: var(--bg3); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0.7; }
+  .project-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.6rem; line-height: 1.3; }
+  .project-link { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-bottom: 1rem; display: block; text-decoration: none; }
+  .project-link:hover { color: var(--accent); }
+  .project-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .tech-pill {
+    padding: 0.25rem 0.65rem;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.18);
+    font-size: 0.72rem;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .project-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .project-highlights li { font-size: 0.84rem; color: var(--muted); padding-left: 1.2rem; position: relative; line-height: 1.55; }
+  .project-highlights li::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent3); }
+
+  /* Experience */
+  #experience { padding-top: 8rem; padding-bottom: 8rem; }
+  .experience-inner { max-width: 1100px; margin: 0 auto; }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute;
+    left: -2.38rem;
+    top: 6px;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0,229,255,0.2);
+  }
+  .timeline-dot.present { background: var(--accent3); box-shadow: 0 0 0 3px rgba(16,185,129,0.25); }
+  .timeline-date { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.4rem; text-transform: uppercase; }
+  .timeline-role { font-size: 1.12rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .timeline-company { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .timeline-badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.3);
+    font-size: 0.68rem;
+    font-family: var(--mono);
+    color: #a78bfa;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.9rem;
+  }
+  .timeline-items { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+  .timeline-items li { font-size: 0.87rem; color: var(--muted); padding-left: 1.2rem; position: relative; line-height: 1.6; }
+  .timeline-items li::before { content: ''; position: absolute; left: 0; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent3); }
+
+  /* Education */
+  #education { padding-top: 8rem; padding-bottom: 8rem; }
+  .education-inner { max-width: 1100px; margin: 0 auto; }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .edu-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .edu-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-3px); }
+  .edu-degree { font-size: 1.08rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .edu-school { color: var(--accent); font-size: 0.88rem; margin-bottom: 0.25rem; font-weight: 500; }
+  .edu-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.2rem; font-family: var(--mono); }
+  .grade-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .grade-pill {
+    padding: 0.28rem 0.65rem;
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.2);
+    font-size: 0.72rem;
+    color: var(--accent3);
+    font-family: var(--mono);
+  }
+  .cert-label { font-size: 0.7rem; color: #a78bfa; letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 0.75rem; }
+  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+  .cert-list li { font-size: 0.86rem; color: var(--muted); padding-left: 1.2rem; position: relative; }
+  .cert-list li::before { content: ''; position: absolute; left: 0; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); }
+
+  /* Contact */
+  #contact { padding-top: 8rem; padding-bottom: 6rem; text-align: center; }
+  .contact-inner { max-width: 700px; margin: 0 auto; }
+  .contact-desc { color: var(--muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.5rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 1.4rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: var(--mono);
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.04); }
+  .contact-link svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  footer {
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  footer p { font-size: 0.76rem; color: var(--muted); font-family: var(--mono); }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 0 1.25rem; }
+    .about-grid, .projects-grid, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Parallax canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Parallax glow blobs -->
+<div class="glow-blob" id="blob1" style="width:700px;height:700px;background:var(--accent);top:-200px;right:-250px;"></div>
+<div class="glow-blob" id="blob2" style="width:500px;height:500px;background:var(--accent2);bottom:10%;left:-200px;"></div>
+<div class="glow-blob" id="blob3" style="width:400px;height:400px;background:var(--accent3);top:60%;right:10%;"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">DN<span>.portfolio</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow" id="typewriter"></p>
+    <h1 class="hero-name">
+      Digen<br>
+      <span class="line2">Naik.</span>
+    </h1>
+    <p class="hero-desc">
+      Business Analyst with hands-on experience in requirements gathering, process analysis, and stakeholder communication. From SQL pipelines to ML models, I turn messy data into decisions teams can act on.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="https://www.linkedin.com/in/digen-naik-2b20b3339/" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="max-width:1100px;margin:0 auto"><div class="section-divider"></div></div>
+  <div class="about-grid reveal" style="padding-top:5rem">
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Data fluent.<br><span>Business minded.</span></h2>
+      <p>I'm a <strong>Business Analytics student at Cape Breton University</strong> in Halifax with hands-on experience translating business needs into technical solutions. I've worked end-to-end on analytics projects, from defining the questions to delivering dashboards stakeholders can actually use.</p>
+      <p>My foundation is a <strong>Mathematics degree from St. Xavier's College</strong>, sharpened by practical work in Python, SQL, Tableau, Power BI, and machine learning. Currently expanding into <strong>Azure cloud services</strong> and Lean process methodologies.</p>
+      <p>I work comfortably in both <strong>Agile and Waterfall</strong> environments, and I naturally step into the role of connecting raw data to real business recommendations.</p>
+    </div>
+    <div class="about-right">
+      <div>
+        <p class="skill-group-label">BA & Process Tools</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Visio</span>
+          <span class="skill-tag">SharePoint</span>
+          <span class="skill-tag">Azure DevOps</span>
+          <span class="skill-tag">PowerPoint</span>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-label">Data & Analytics</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MS SQL Server</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Statistical Analysis</span>
+          <span class="skill-tag">Data Modeling</span>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-label">Methods & Frameworks</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Requirements Gathering</span>
+          <span class="skill-tag">Business Process Mapping</span>
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">Waterfall</span>
+          <span class="skill-tag">Lean</span>
+          <span class="skill-tag">SDLC</span>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-label">Cloud & Dev Tools</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Azure (learning)</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Jupyter Notebook</span>
+          <span class="skill-tag">MySQL Workbench</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding-top:8rem;padding-bottom:8rem">
+  <div class="projects-inner">
+    <p class="section-label reveal">Projects</p>
+    <h2 class="section-title reveal">Work that <span>ships.</span></h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <p class="project-num">01 / MACHINE LEARNING &amp; BUSINESS ANALYTICS</p>
+        <h3 class="project-title">Credit Card Fraud Detection</h3>
+        <a href="https://github.com/DIGEN01/credit-card-fraud-detection" target="_blank" class="project-link">github.com/DIGEN01/credit-card-fraud-detection ↗</a>
+        <p class="project-desc">Designed and delivered a full end-to-end fraud detection system on real-world transaction data, structured across three phases: business question definition, analytical build, and stakeholder-ready recommendations.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">XGBoost</span>
+          <span class="tech-pill">TensorFlow</span>
+          <span class="tech-pill">Random Forest</span>
+          <span class="tech-pill">scikit-learn</span>
+          <span class="tech-pill">Tableau</span>
+          <span class="tech-pill">SQL</span>
+        </div>
+        <ul class="project-highlights">
+          <li>Engineered 14 business-relevant features from raw transaction data by analysing the underlying drivers of fraud behaviour rather than relying on generic numeric outputs.</li>
+          <li>Built a custom ensemble model combining XGBoost, a Neural Network, and Random Forest, designing each component to cover the blind spots of the others and produce a system stronger than any single model.</li>
+          <li>Developed a four-tier transaction routing framework that translated model outputs into concrete business actions, from auto-approving low-risk transactions to flagging high-risk ones for manual review.</li>
+          <li>Built an interactive Tableau dashboard enabling stakeholders to independently explore fraud patterns by time, customer segment, and season, without requiring access to the underlying data.</li>
+          <li>Delivered a full written report in accessible, non-technical language covering model rationale, decision logic, and estimated business impact.</li>
+        </ul>
+      </div>
+
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <p class="project-num">02 / BUSINESS INTELLIGENCE &amp; SQL ANALYTICS</p>
+        <h3 class="project-title">Brazilian E-Commerce BI Analysis</h3>
+        <a href="https://github.com/DIGEN01/Brazilian-Ecommerce-Analysis" target="_blank" class="project-link">github.com/DIGEN01/Brazilian-Ecommerce-Analysis ↗</a>
+        <p class="project-desc">Conducted a comprehensive business intelligence analysis on the Olist dataset, spanning 112,650 orders across nine relational tables, to uncover customer behaviour patterns and generate actionable retention and growth strategies.</p>
+        <div class="project-tech">
+          <span class="tech-pill">MySQL</span>
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Power BI</span>
+          <span class="tech-pill">scikit-learn</span>
+          <span class="tech-pill">K-Means</span>
+          <span class="tech-pill">Apriori</span>
+          <span class="tech-pill">Decision Tree</span>
+        </div>
+        <ul class="project-highlights">
+          <li>Defined the business questions upfront, then built a MySQL data pipeline across nine relational tables to work through each one systematically.</li>
+          <li>Identified that 97% of customers placed only a single order, surfacing a critical retention gap and informing segment-specific campaign recommendations for the marketing team.</li>
+          <li>Applied K-Means clustering to segment buyers into three behavioural groups and trained a Decision Tree classifier to predict customer segments in real time.</li>
+          <li>Used Apriori association rule mining to identify product co-purchase patterns, translating findings into concrete cross-sell and retention strategies.</li>
+          <li>Built Power BI dashboards enabling marketing and operations teams to explore customer segments and purchasing trends without needing a data background.</li>
+          <li>Produced a structured business report with recommendations written at a level of specificity that a team could act on immediately.</li>
+        </ul>
+      </div>
+
+    </div>
+    <div style="margin-top:1.5rem;text-align:center">
+      <a href="https://github.com/DIGEN01" target="_blank" class="btn-ghost" style="display:inline-flex">View all on GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="experience-inner">
+    <p class="section-label reveal">Experience</p>
+    <h2 class="section-title reveal">Work <span>history.</span></h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot present"></div>
+        <p class="timeline-date">Jun 2026 — Present</p>
+        <p class="timeline-role">Business Analyst & Inventory Manager</p>
+        <p class="timeline-company">Bhappy Trading Inc. · Halifax, NS</p>
+        <span class="timeline-badge">3-Month Contract</span>
+        <ul class="timeline-items">
+          <li>Analyze historical sales and inventory data to identify trends, then build dashboards and present findings to the store manager for decision-making</li>
+          <li>Review stock levels, determine reorder quantities, prepare orders for manager approval, and follow through on placement</li>
+          <li>Redesigned store layout to improve product visibility and customer flow</li>
+          <li>Developed advertisement plans and campaign ideas for the marketing team</li>
+          <li>Monitor market pricing on key products and adjust store prices to stay competitive while maintaining margins</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot present"></div>
+        <p class="timeline-date">Dec 2025 — Present</p>
+        <p class="timeline-role">Stock Unloader</p>
+        <p class="timeline-company">Walmart · Halifax, NS</p>
+        <ul class="timeline-items">
+          <li>Fast-paced environment requiring accuracy and process adherence to keep store operations running smoothly</li>
+          <li>Coordinate stock flow with team to ensure accurate placement, with consistent attention to detail</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">Nov 2025 — Dec 2025</p>
+        <p class="timeline-role">Inventory Manager & Customer Service</p>
+        <p class="timeline-company">Bhappy Trading Inc. · Halifax, NS</p>
+        <ul class="timeline-items">
+          <li>Identified process gaps in stock management; recommended product placement and ordering priorities that reduced stockouts</li>
+          <li>Reviewed theft risk in store layout and proposed changes the owner implemented</li>
+          <li>Handled customer questions and issues on the floor professionally</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">May 2024 — Oct 2024</p>
+        <p class="timeline-role">Computer Technician</p>
+        <p class="timeline-company">Unique Computers · Gujarat, India</p>
+        <ul class="timeline-items">
+          <li>Diagnosed and resolved hardware and software issues, communicating clearly with clients throughout</li>
+          <li>Spotted patterns in recurring support requests and proposed process changes to handle common issues faster</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="education-inner">
+    <p class="section-label reveal">Education</p>
+    <h2 class="section-title reveal">Academic <span>foundation.</span></h2>
+    <div class="edu-grid">
+
+      <div class="edu-card reveal">
+        <p class="edu-school">Cape Breton University · Halifax, NS</p>
+        <p class="edu-degree">Post-Baccalaureate Diploma in Business Analytics</p>
+        <p class="edu-meta">Present — Expected Jan 2027</p>
+        <p style="font-size:0.84rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">Business Analytics Fundamentals · Database Concepts · Statistics · Data Mining · Predictive Modeling · Data Visualization · Supply Chain Management · Marketing Research</p>
+        <div class="grade-pills">
+          <span class="grade-pill">Data Viz 90%</span>
+          <span class="grade-pill">BA Fundamentals 90%</span>
+          <span class="grade-pill">Statistics 89%</span>
+          <span class="grade-pill">Supply Chain 95%</span>
+          <span class="grade-pill">Marketing Research 92%</span>
+        </div>
+      </div>
+
+      <div class="edu-card reveal" style="transition-delay:0.1s">
+        <p class="edu-school">St. Xavier's College · Ahmedabad, India</p>
+        <p class="edu-degree">Bachelor of Science in Mathematics</p>
+        <p class="edu-meta">May 2022</p>
+        <p style="font-size:0.84rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem">Strong foundation in quantitative reasoning and problem-solving that feeds directly into analytical and process-oriented work.</p>
+        <p class="cert-label">Certifications</p>
+        <ul class="cert-list">
+          <li>Google Data Analytics Professional Certificate (Coursera)</li>
+          <li>Intermediate SQL (DataCamp)</li>
+          <li>Analyzing Data in Tableau (DataCamp)</li>
+          <li>Introduction to Tableau (DataCamp)</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <p class="section-label" style="justify-content:center">Contact</p>
+    <h2 class="section-title">Let's <span>connect.</span></h2>
+    <p class="contact-desc">Open to Business Analyst, Data Analyst, and related roles. I'd love to talk about how I can bring analytical clarity and business value to your team.</p>
+    <div class="contact-links">
+      <a href="mailto:digenpnaik@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        digenpnaik@gmail.com
+      </a>
+      <a href="tel:+17828991818" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91"/></svg>
+        +1 782-899-1818
+      </a>
+      <a href="https://www.linkedin.com/in/digen-naik-2b20b3339/" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/DIGEN01" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Digen Naik</p>
+  <p>Halifax, NS · digenpnaik@gmail.com</p>
+</footer>
+
+<script>
+// ── Particle canvas ──────────────────────────────────────────────
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : (Math.random() < 0.5 ? -5 : H + 5);
+    this.vx = (Math.random() - 0.5) * 0.28;
+    this.vy = (Math.random() - 0.5) * 0.28;
+    this.r  = Math.random() * 1.4 + 0.4;
+    this.alpha = Math.random() * 0.35 + 0.05;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < -10 || this.x > W+10 || this.y < -10 || this.y > H+10) this.reset(false);
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(0,229,255,${this.alpha})`;
+    ctx.fill();
+  }
+}
+for (let i = 0; i < 130; i++) particles.push(new Particle());
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i+1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 110) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0,229,255,${0.055*(1-d/110)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, W, H);
+  drawLines();
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ── Parallax on scroll ───────────────────────────────────────────
+const blob1 = document.getElementById('blob1');
+const blob2 = document.getElementById('blob2');
+const blob3 = document.getElementById('blob3');
+
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const sy = window.scrollY;
+      // canvas drifts slowly upward as you scroll down
+      canvas.style.transform = `translateY(${sy * 0.18}px)`;
+      // blobs drift at different rates for depth
+      blob1.style.transform = `translateY(${sy * 0.09}px)`;
+      blob2.style.transform = `translateY(${sy * 0.14}px)`;
+      blob3.style.transform = `translateY(${sy * 0.07}px)`;
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// ── Custom cursor ────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function trackRing() {
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+  ring.style.left   = rx+'px'; ring.style.top  = ry+'px';
+  requestAnimationFrame(trackRing);
+})();
+document.querySelectorAll('a, button, .project-card, .edu-card, .skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.transform='translate(-50%,-50%) scale(1.5)'; ring.style.borderColor='rgba(0,229,255,0.8)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; ring.style.borderColor='rgba(0,229,255,0.5)'; });
+});
+
+// ── Scroll reveal ────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+// ── Typewriter ───────────────────────────────────────────────────
+const roles = ['Business Analyst', 'Data Analyst', 'Data Scientist', 'BI Developer'];
+const tw = document.getElementById('typewriter');
+let ri=0, ci=0, del=false;
+function type() {
+  const cur = roles[ri];
+  if (!del) { tw.textContent = cur.slice(0, ++ci); if (ci===cur.length) { del=true; setTimeout(type,1800); return; } }
+  else       { tw.textContent = cur.slice(0, --ci); if (ci===0) { del=false; ri=(ri+1)%roles.length; } }
+  setTimeout(type, del ? 55 : 95);
+}
+setTimeout(type, 1800);
+
+// ── Nav active ───────────────────────────────────────────────────
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur='';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) cur = s.id; });
+  navAs.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--accent)' : ''; });
+}, { passive: true });
+</script>
+</body>
+</html>
