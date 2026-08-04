@@ -582,8 +582,185 @@
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
 
+  /* Refined story sequence: Hero → About → Skills → Projects */
+  #hero {
+    height: 100vh;
+    min-height: 680px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .about-principles {
+    position: relative;
+    padding: 1.65rem 1.75rem 1.8rem;
+    border: 1px solid rgba(0,229,255,0.16);
+    border-radius: 1rem;
+    background: linear-gradient(145deg,rgba(11,24,32,0.86),rgba(5,10,14,0.62));
+    box-shadow: 0 24px 80px rgba(0,0,0,0.24), inset 0 0 50px rgba(0,229,255,0.025);
+    overflow: hidden;
+  }
+  .about-principles::before { content: ''; position: absolute; top: 0; left: 1.75rem; width: 5rem; height: 1px; background: linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .about-principles-kicker { margin-bottom: 1.5rem; color: var(--accent); font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.19em; text-transform: uppercase; }
+  .about-process { position: relative; display: grid; gap: 1.25rem; list-style: none; }
+  .about-process::before { content: ''; position: absolute; left: 1.05rem; top: 1rem; bottom: 1rem; width: 1px; background: linear-gradient(var(--accent),rgba(124,58,237,0.25)); }
+  .about-process li { position: relative; display: grid; grid-template-columns: 2.2rem 1fr; gap: 1rem; }
+  .about-process li > span { position: relative; z-index: 1; width: 2.15rem; height: 2.15rem; display: grid; place-items: center; border: 1px solid rgba(0,229,255,0.5); border-radius: 50%; background: var(--bg); color: var(--accent); font: 0.58rem var(--mono); box-shadow: 0 0 22px rgba(0,229,255,0.1); }
+  .about-process strong { display: block; margin: 0.15rem 0 0.35rem; font-size: 0.98rem; }
+  .about-process p { color: var(--muted); font-size: 0.83rem; line-height: 1.55; }
+
+  .skills-story { height: 100vh; min-height: 720px; padding: 0; z-index: 3; }
+  .skills-stage { position: relative; height: 100vh; min-height: 720px; overflow: hidden; isolation: isolate; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: radial-gradient(circle at 50% 48%,rgba(0,229,255,0.055),transparent 35%),linear-gradient(115deg,rgba(124,58,237,0.035),transparent 42%); }
+  .skills-stage::before { content: ''; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(rgba(0,229,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.025) 1px,transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(circle at center,#000,transparent 78%); }
+  .skills-heading-new { position: absolute; z-index: 5; top: clamp(5.8rem,11vh,7.2rem); left: clamp(2rem,6.3vw,6.75rem); width: min(43rem,57vw); }
+  .skills-heading-new > p, .project-heading > p { margin-bottom: 0.7rem; color: var(--accent); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.23em; text-transform: uppercase; }
+  .skills-heading-new h2 { font-size: clamp(2.4rem,4.1vw,4.9rem); line-height: 0.98; letter-spacing: -0.055em; }
+  .skills-heading-new h2 span, .project-heading h2 span { color: transparent; background: linear-gradient(90deg,var(--accent),#a78bfa); background-clip: text; -webkit-background-clip: text; }
+
+  .skill-node-field { position: absolute; z-index: 7; inset: 0; pointer-events: none; }
+  .skill-node {
+    --node-color: 0,229,255;
+    position: absolute;
+    top: 45.5%;
+    left: 50%;
+    width: clamp(7.2rem,9.4vw,8.5rem);
+    aspect-ratio: 1;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.48rem;
+    padding: 0.8rem;
+    border: 1px solid rgba(var(--node-color),0.48);
+    border-radius: 50%;
+    color: var(--text);
+    background: radial-gradient(circle at 50% 40%,rgba(var(--node-color),0.14),rgba(5,10,14,0.88) 69%);
+    box-shadow: 0 0 0 8px rgba(var(--node-color),0.025),0 0 42px rgba(var(--node-color),0.11),inset 0 0 24px rgba(var(--node-color),0.05);
+    cursor: none;
+    pointer-events: auto;
+    transform: translate(-50%,-50%);
+    transform-origin: 50% 50%;
+    will-change: transform,opacity;
+  }
+  .skill-node::before, .skill-node::after { content: ''; position: absolute; inset: -0.55rem; border: 1px solid rgba(var(--node-color),0.12); border-radius: inherit; clip-path: inset(0 54% 0 0); }
+  .skill-node::after { inset: -1rem; opacity: 0.55; clip-path: inset(0 0 0 54%); }
+  .skill-node:nth-child(1) { left: 22%; }
+  .skill-node:nth-child(2) { left: 40.5%; }
+  .skill-node:nth-child(3) { left: 59.5%; }
+  .skill-node:nth-child(4) { left: 78%; }
+  .skill-node-data { --node-color: 167,139,250; }
+  .skill-node-methods { --node-color: 16,185,129; }
+  .skill-node-cloud { --node-color: 245,158,11; }
+  .skill-node-code { color: rgb(var(--node-color)); font: 0.62rem var(--mono); letter-spacing: 0.12em; }
+  .skill-node strong { font-size: clamp(0.72rem,0.9vw,0.86rem); line-height: 1.12; text-align: center; }
+  .skill-node.is-active { border-color: rgba(var(--node-color),0.92); box-shadow: 0 0 0 8px rgba(var(--node-color),0.04),0 0 56px rgba(var(--node-color),0.24),inset 0 0 28px rgba(var(--node-color),0.11); }
+
+  .skill-detail-stack { position: absolute; z-index: 6; top: 58.5%; bottom: 4.3rem; left: 50%; width: min(68.75rem,calc(100% - 6rem)); transform: translateX(-50%); }
+  .skill-detail { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(13rem,0.3fr) 1fr; gap: 2rem; align-items: center; padding: clamp(1.1rem,2vw,1.65rem) clamp(1.2rem,2.4vw,2rem); border: 1px solid rgba(0,229,255,0.16); border-radius: 0.85rem; background: linear-gradient(100deg,rgba(7,17,23,0.94),rgba(10,20,29,0.74)); box-shadow: 0 24px 70px rgba(0,0,0,0.25),inset 0 0 36px rgba(0,229,255,0.02); opacity: 0; visibility: hidden; pointer-events: none; }
+  .skill-detail.is-active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .skill-detail header { display: grid; grid-template-columns: 2.4rem 1fr; gap: 0.8rem; align-items: start; }
+  .skill-detail header > span { width: 2.25rem; height: 2.25rem; display: grid; place-items: center; border: 1px solid rgba(0,229,255,0.55); border-radius: 50%; color: var(--accent); font: 0.6rem var(--mono); }
+  .skill-detail h3 { margin-bottom: 0.3rem; font-size: clamp(1.05rem,1.5vw,1.4rem); }
+  .skill-detail header p { color: var(--muted); font: 0.56rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+  .skill-pill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; }
+  .skill-pill-list li { padding: 0.45rem 0.68rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 0.35rem; background: rgba(5,10,14,0.46); color: #b6c7cf; font-size: clamp(0.67rem,0.8vw,0.8rem); }
+  .skill-pill-list-short li { min-width: 12rem; text-align: center; }
+  .skill-detail-columns { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .skill-detail-columns h4 { margin-bottom: 0.4rem; padding-bottom: 0.35rem; border-bottom: 1px solid rgba(167,139,250,0.2); color: #c4b5fd; font: 0.56rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+  .skill-detail-columns p { color: #a9bac3; font-size: clamp(0.63rem,0.72vw,0.73rem); line-height: 1.7; }
+  .skills-status { position: absolute; z-index: 7; right: clamp(2rem,4vw,4.5rem); bottom: 2rem; display: flex; align-items: center; gap: 0.6rem; color: var(--muted); font: 0.58rem var(--mono); }
+  .skills-status-current { color: var(--accent); }
+  .skills-status i, .project-count i { display: block; width: 3.4rem; height: 1px; background: linear-gradient(90deg,var(--accent),rgba(124,58,237,0.4)); }
+  .skill-handoff-card { position: absolute; z-index: 8; top: 45.5%; left: 50%; width: 18rem; height: 10.6rem; padding: 1.5rem; border: 1px solid rgba(0,229,255,0.65); border-radius: 1rem; color: #dffcff; background: linear-gradient(135deg,rgba(0,229,255,0.16),rgba(124,58,237,0.25) 62%,rgba(5,10,14,0.95)); box-shadow: 0 30px 90px rgba(0,0,0,0.4),0 0 50px rgba(0,229,255,0.13); opacity: 0; visibility: hidden; transform: translate(-50%,-50%); transform-style: preserve-3d; }
+  .skill-handoff-card span { display: block; width: 2.6rem; height: 2rem; border: 1px solid rgba(255,255,255,0.45); border-radius: 0.35rem; background: linear-gradient(90deg,transparent 47%,rgba(255,255,255,0.3) 48% 52%,transparent 53%); }
+  .skill-handoff-card i { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 3rem; height: 1px; background: rgba(255,255,255,0.23); }
+  .skill-handoff-card b { position: absolute; left: 1.5rem; bottom: 1.3rem; font: 0.61rem var(--mono); letter-spacing: 0.14em; }
+
+  #projects.project-story { height: 100vh; min-height: 720px; padding: 0; z-index: 4; }
+  .project-stage { position: relative; height: 100vh; min-height: 720px; overflow: hidden; isolation: isolate; background: linear-gradient(115deg,rgba(0,229,255,0.025),transparent 44%),radial-gradient(circle at 74% 54%,rgba(124,58,237,0.09),transparent 34%); }
+  .project-heading { position: absolute; z-index: 10; top: clamp(5.6rem,10.5vh,7rem); left: clamp(2rem,6.3vw,6.75rem); right: clamp(2rem,5vw,5.5rem); display: grid; grid-template-columns: 1fr auto; align-items: end; pointer-events: none; }
+  .project-heading > p { grid-column: 1 / -1; }
+  .project-heading h2 { font-size: clamp(2rem,3.7vw,4.3rem); line-height: 1; letter-spacing: -0.05em; }
+  .project-count { display: flex; align-items: center; gap: 0.65rem; padding-bottom: 0.45rem; color: var(--muted); font: 0.62rem var(--mono); }
+  .project-count strong { color: var(--accent); font-weight: 400; }
+  .project-object-layer { position: absolute; z-index: 2; inset: 0; pointer-events: none; perspective: 1000px; }
+  .credit-card-object { position: absolute; top: 33%; right: 6.5vw; width: clamp(24rem,34vw,36rem); aspect-ratio: 1.68; padding: 2rem; border: 1px solid rgba(0,229,255,0.72); border-radius: 1.55rem; color: rgba(223,252,255,0.95); background: radial-gradient(circle at 70% 70%,rgba(0,229,255,0.17),transparent 30%),linear-gradient(135deg,#071922,#10233b 48%,#28195d 100%); box-shadow: 0 50px 100px rgba(0,0,0,0.45),0 0 70px rgba(0,229,255,0.1),inset 0 0 50px rgba(0,229,255,0.05); transform: rotateY(-10deg) rotateZ(-3deg); transform-style: preserve-3d; overflow: hidden; }
+  .card-shine { position: absolute; inset: -60% 40% -60% -30%; background: linear-gradient(100deg,transparent,rgba(255,255,255,0.11),transparent); transform: rotate(18deg); }
+  .card-chip { position: absolute; top: 30%; left: 10%; width: 3.4rem; height: 2.45rem; border: 1px solid rgba(255,255,255,0.5); border-radius: 0.4rem; background: linear-gradient(90deg,transparent 47%,rgba(255,255,255,0.2) 48% 52%,transparent 53%),linear-gradient(transparent 47%,rgba(255,255,255,0.2) 48% 52%,transparent 53%); }
+  .card-signal { position: absolute; top: 30%; left: 23%; width: 2rem; height: 2.4rem; border: 2px solid transparent; border-right-color: rgba(255,255,255,0.55); border-radius: 50%; }
+  .credit-card-object p { position: absolute; top: 12%; right: 9%; color: var(--accent); font: 0.58rem var(--mono); letter-spacing: 0.2em; }
+  .credit-card-object strong { position: absolute; left: 10%; bottom: 25%; font: clamp(0.78rem,1.2vw,1.2rem) var(--mono); letter-spacing: 0.13em; }
+  .credit-card-object small { position: absolute; right: 9%; bottom: 10%; color: #c4b5fd; font: 0.58rem var(--mono); letter-spacing: 0.12em; }
+  .shopping-cart-object { position: absolute; top: 28%; right: 8vw; width: min(38vw,36rem); height: auto; fill: none; stroke: url(#cartGradient); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 22px rgba(0,229,255,0.2)); opacity: 0; transform: rotate(-12deg) scale(0.35); transform-origin: center; }
+  .shopping-cart-object circle { fill: rgba(5,10,14,0.85); }
+  .shopping-cart-object .cart-data-line { stroke-width: 1.5; stroke-dasharray: 6 9; opacity: 0.65; }
+
+  .project-track { position: relative; z-index: 5; display: flex; width: 200vw; height: 100%; will-change: transform; }
+  .project-panel { flex: 0 0 100vw; position: relative; height: 100%; padding: 12.3rem 6.3vw 2rem; display: flex; align-items: flex-start; }
+  .project-content { width: min(39rem,51vw); padding: 1.35rem 1.55rem; border: 1px solid rgba(0,229,255,0.12); border-radius: 0.85rem; background: linear-gradient(100deg,rgba(5,10,14,0.93),rgba(5,10,14,0.7)); backdrop-filter: blur(15px); box-shadow: 0 26px 90px rgba(0,0,0,0.28); }
+  .project-panel .project-num { margin-bottom: 0.55rem; }
+  .project-panel .project-title { margin-bottom: 0.35rem; font-size: clamp(1.75rem,2.8vw,3rem); line-height: 0.98; letter-spacing: -0.04em; }
+  .project-panel .project-link { margin-bottom: 0.65rem; color: var(--accent); }
+  .project-panel .project-desc { margin-bottom: 0.75rem; font-size: clamp(0.72rem,0.82vw,0.84rem); line-height: 1.55; }
+  .project-panel .project-tech { margin-bottom: 0.75rem; }
+  .project-panel .tech-pill { padding: 0.2rem 0.48rem; font-size: 0.62rem; }
+  .project-panel .project-highlights { gap: 0.32rem; }
+  .project-panel .project-highlights li { font-size: clamp(0.68rem,0.76vw,0.78rem); line-height: 1.42; }
+  .commerce-panel { background: linear-gradient(90deg,rgba(16,185,129,0.018),transparent 62%); }
+  .project-exit-link { position: absolute; z-index: 8; right: 4vw; bottom: 2rem; }
+
+  html[data-theme="light"] .about-principles, html[data-theme="light"] .skill-detail, html[data-theme="light"] .project-content { background: rgba(255,255,255,0.88); }
+  html[data-theme="light"] .skill-node { background: radial-gradient(circle at 50% 35%,rgba(var(--node-color),0.12),rgba(255,255,255,0.92) 70%); }
+  html[data-theme="light"] .skill-pill-list li { color: #3c5864; background: rgba(237,245,247,0.8); }
+
+  @media (max-width: 768px) {
+    #hero { height: auto; min-height: 100svh; }
+    .hero-inner { min-height: 100svh; padding-bottom: 19rem; }
+    #about { padding-top: 5rem; padding-bottom: 5rem; }
+    .about-principles { padding: 1.35rem 1.15rem; }
+    .about-process li { gap: 0.7rem; }
+
+    .skills-story, #projects.project-story { height: auto; min-height: 0; padding: 0; }
+    .skills-stage { height: auto; min-height: 0; padding: 5.5rem 1.25rem 4.5rem; overflow: visible; }
+    .skills-heading-new { position: relative; top: auto; left: auto; width: 100%; margin-bottom: 2.5rem; }
+    .skills-heading-new h2 { font-size: clamp(2.45rem,12vw,3.5rem); }
+    .skill-node-field { position: relative; inset: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; margin-bottom: 2.5rem; pointer-events: auto; }
+    .skill-node, .skill-node:nth-child(n) { position: relative; top: auto; left: auto; width: min(34vw,7.6rem); transform: none !important; opacity: 1 !important; }
+    .skill-detail-stack { position: relative; inset: auto; width: 100%; transform: none; display: grid; gap: 1rem; }
+    .skill-detail, .skill-detail.is-active { position: relative; inset: auto; display: block; padding: 1.1rem; opacity: 1 !important; visibility: visible !important; transform: none !important; pointer-events: auto; }
+    .skill-detail header { margin-bottom: 1rem; }
+    .skill-detail-columns { grid-template-columns: 1fr; }
+    .skill-detail-columns > div + div { margin-top: 0.45rem; }
+    .skill-pill-list-short li { min-width: 0; }
+    .skills-status, .skill-handoff-card { display: none !important; }
+
+    .project-stage { height: auto; min-height: 0; padding: 5.5rem 0 0; overflow: visible; }
+    .project-heading { position: relative; inset: auto; display: block; padding: 0 1.25rem; margin-bottom: 2.5rem; }
+    .project-heading h2 { font-size: clamp(2.35rem,11vw,3.3rem); }
+    .project-count { margin-top: 1rem; }
+    .project-object-layer { display: none; }
+    .project-track { display: block; width: 100%; height: auto; transform: none !important; }
+    .project-panel { width: 100%; height: auto; min-height: 0; padding: 0 1.25rem 3.5rem; display: block; }
+    .project-content { width: 100%; padding: 1.2rem; opacity: 1 !important; transform: none !important; }
+    .project-panel .project-title { font-size: clamp(2rem,10vw,2.8rem); }
+    .project-panel .project-desc { font-size: 0.82rem; }
+    .project-panel .project-highlights li { font-size: 0.76rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (min-width: 769px) {
+    .skills-story, #projects.project-story { height: auto; min-height: 0; }
+    .skills-stage, .project-stage { height: auto; min-height: 0; padding: 7rem 3rem; overflow: visible; }
+    .skills-heading-new, .project-heading { position: relative; inset: auto; width: min(68.75rem,100%); margin: 0 auto 3rem; }
+    .skill-node-field { position: relative; inset: auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; justify-items: center; margin: 0 auto 3rem; max-width: 68.75rem; }
+    .skill-node, .skill-node:nth-child(n) { position: relative; inset: auto; transform: none; }
+    .skill-detail-stack { position: relative; inset: auto; width: min(68.75rem,100%); transform: none; display: grid; gap: 1rem; margin: 0 auto; }
+    .skill-detail, .skill-detail.is-active { position: relative; inset: auto; opacity: 1; visibility: visible; }
+    .skills-status, .skill-handoff-card, .project-object-layer, .project-count { display: none; }
+    .project-track { width: 100%; height: auto; display: grid; gap: 2rem; }
+    .project-panel { width: 100%; height: auto; padding: 0; }
+    .project-content { width: min(68.75rem,100%); margin: 0 auto; opacity: 1 !important; transform: none !important; }
+  }
+
   @media (hover: none), (pointer: coarse) {
-    body, a, button, .project-card { cursor: auto; }
+    body, a, button, .project-card, .skill-node { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
   }
 
@@ -626,89 +803,16 @@
 
 <!-- HERO -->
 <section id="hero">
-  <span id="skills" class="skills-anchor" aria-hidden="true"></span>
-  <div class="story-stage">
-    <div class="hero-inner">
-      <p class="hero-eyebrow">Business Analyst <span>· Data Analyst</span></p>
-      <h1 class="hero-name">Digen Naik<b>.</b></h1>
-      <p class="hero-desc">
-        <span>Turning data into clarity and strategy.</span>
-        I help businesses make smarter, data-driven decisions.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn-primary">Explore My Work
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a href="resume.pdf" class="btn-ghost" download>View Resume
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="scroll-cue" aria-hidden="true"><span class="scroll-mouse"></span><span>SCROLL TO EXPLORE</span></div>
-
-    <div class="skills-heading">
-      <p>SKILLS / CORE COMPETENCIES</p>
-      <h2>One connected toolkit.</h2>
-    </div>
-    <svg class="skill-connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M50 50 C42 46 38 35 29 31"/><circle cx="29" cy="31" r="0.32"/>
-      <path d="M50 50 C58 46 62 34 72 30"/><circle cx="72" cy="30" r="0.32"/>
-      <path d="M50 50 C42 55 38 67 31 72"/><circle cx="31" cy="72" r="0.32"/>
-      <path d="M50 50 C58 55 61 67 70 72"/><circle cx="70" cy="72" r="0.32"/>
-    </svg>
-    <div class="core-caption" aria-hidden="true"><strong>CORE COMPETENCIES</strong><span>Business context · analytical depth</span></div>
-
-    <div class="skill-network" aria-label="Digen Naik's connected skill network">
-      <article class="skill-branch branch-ba">
-        <header><span class="branch-icon">BA</span><div><h3>BA &amp; Process Tools</h3><small>DISCOVER · ALIGN · IMPROVE</small></div></header>
-        <ul class="skill-leaves">
-          <li>Requirements gathering</li><li>Stakeholder communication</li>
-          <li>Process improvement</li><li>Root-cause analysis</li>
-          <li>Documentation</li><li>Microsoft 365</li>
-          <li>SharePoint</li>
-        </ul>
-      </article>
-
-      <article class="skill-branch branch-data">
-        <header><span class="branch-icon">DA</span><div><h3>Data &amp; Analytics</h3><small>QUERY · ANALYZE · COMMUNICATE</small></div></header>
-        <div class="data-clusters">
-          <div class="data-cluster"><h4>Analysis &amp; Querying</h4><ul><li>SQL</li><li>MySQL</li><li>MS SQL Server</li><li>Excel</li><li>Data cleaning</li><li>Data validation</li><li>Exploratory analysis</li><li>Statistical analysis</li></ul></div>
-          <div class="data-cluster"><h4>Programming &amp; Data Science</h4><ul><li>Python</li><li>Pandas</li><li>NumPy</li><li>scikit-learn</li><li>XGBoost</li><li>TensorFlow</li><li>Classification</li><li>Predictive modelling</li></ul></div>
-          <div class="data-cluster"><h4>BI &amp; Visualization</h4><ul><li>Power BI</li><li>Tableau</li><li>Excel dashboards</li><li>KPI reporting</li><li>Data storytelling</li></ul></div>
-        </div>
-      </article>
-
-      <article class="skill-branch branch-methods">
-        <header><span class="branch-icon">MF</span><div><h3>Methods &amp; Frameworks</h3><small>STRUCTURED DELIVERY</small></div></header>
-        <ul class="skill-leaves"><li>Agile methodology</li><li>Waterfall methodology</li></ul>
-      </article>
-
-      <article class="skill-branch branch-cloud">
-        <header><span class="branch-icon">DT</span><div><h3>Cloud &amp; Dev Tools</h3><small>BUILD · VERSION · COLLABORATE</small></div></header>
-        <ul class="skill-leaves">
-          <li>Azure</li><li>Git</li><li>VS Code</li><li>Jupyter Notebook</li><li>Windows environments</li>
-        </ul>
-      </article>
-    </div>
-
-    <div class="mobile-skill-list">
-      <p>SKILLS / CORE COMPETENCIES</p><h2>One connected toolkit.</h2>
-      <article class="skill-branch branch-ba">
-        <header><span class="branch-icon">BA</span><div><h3>BA &amp; Process Tools</h3><small>DISCOVER · ALIGN · IMPROVE</small></div></header>
-        <ul class="skill-leaves"><li>Requirements gathering</li><li>Stakeholder communication</li><li>Process improvement</li><li>Root-cause analysis</li><li>Documentation</li><li>Microsoft 365</li><li>SharePoint</li></ul>
-      </article>
-      <article class="skill-branch branch-data">
-        <header><span class="branch-icon">DA</span><div><h3>Data &amp; Analytics</h3><small>QUERY · ANALYZE · COMMUNICATE</small></div></header>
-        <div class="data-clusters">
-          <div class="data-cluster"><h4>Analysis &amp; Querying</h4><ul><li>SQL</li><li>MySQL</li><li>MS SQL Server</li><li>Excel</li><li>Data cleaning</li><li>Data validation</li><li>Exploratory analysis</li><li>Statistical analysis</li></ul></div>
-          <div class="data-cluster"><h4>Programming &amp; Data Science</h4><ul><li>Python</li><li>Pandas</li><li>NumPy</li><li>scikit-learn</li><li>XGBoost</li><li>TensorFlow</li><li>Classification</li><li>Predictive modelling</li></ul></div>
-          <div class="data-cluster"><h4>BI &amp; Visualization</h4><ul><li>Power BI</li><li>Tableau</li><li>Excel dashboards</li><li>KPI reporting</li><li>Data storytelling</li></ul></div>
-        </div>
-      </article>
-      <article class="skill-branch branch-methods"><header><span class="branch-icon">MF</span><div><h3>Methods &amp; Frameworks</h3><small>STRUCTURED DELIVERY</small></div></header><ul class="skill-leaves"><li>Agile methodology</li><li>Waterfall methodology</li></ul></article>
-      <article class="skill-branch branch-cloud"><header><span class="branch-icon">DT</span><div><h3>Cloud &amp; Dev Tools</h3><small>BUILD · VERSION · COLLABORATE</small></div></header><ul class="skill-leaves"><li>Azure</li><li>Git</li><li>VS Code</li><li>Jupyter Notebook</li><li>Windows environments</li></ul></article>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Business Analyst <span>· Data Analyst</span></p>
+    <h1 class="hero-name">Digen Naik<b>.</b></h1>
+    <p class="hero-desc"><span>Turning data into clarity and strategy.</span>I help businesses make smarter, data-driven decisions.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">Explore My Work <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="resume.pdf" class="btn-ghost" download>View Resume <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a>
     </div>
   </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-mouse"></span><span>SCROLL TO EXPLORE</span></div>
 </section>
 
 <!-- ABOUT -->
@@ -717,77 +821,123 @@
   <div class="about-grid reveal" style="padding-top:5rem">
     <div class="about-text">
       <p class="section-label">About</p>
-      <h2 class="section-title">Data fluent.<br><span>Business minded.</span></h2>
-      <p>I'm a <strong>Business Analytics student at Cape Breton University</strong> in Halifax with hands-on experience translating business needs into technical solutions. I've worked end-to-end on analytics projects, from defining the questions to delivering dashboards stakeholders can actually use.</p>
-      <p>My foundation is a <strong>Mathematics degree from St. Xavier's College</strong>, sharpened by practical work in Python, SQL, Tableau, Power BI, and machine learning. Currently expanding into <strong>Azure cloud services</strong> and Lean process methodologies.</p>
-      <p>I work comfortably in both <strong>Agile and Waterfall</strong> environments, and I naturally step into the role of connecting raw data to real business recommendations.</p>
+      <h2 class="section-title">Clarity before<br><span>complexity.</span></h2>
+      <p>I'm a business analyst with a quantitative foundation and hands-on experience turning ambiguous questions into analysis people can act on. I connect <strong>business context, trusted data, and clear communication</strong> so decisions are supported by evidence rather than assumptions.</p>
+      <p>My Business Analytics studies at Cape Breton University build on a <strong>B.Sc. in Mathematics</strong> and practical work across SQL, Python, Power BI, Tableau, statistical analysis, and machine learning. I am equally comfortable examining the detail and explaining what it means to a non-technical audience.</p>
+      <p>Whether the work calls for an Agile feedback loop or a structured Waterfall delivery, I focus on the same outcome: <strong>a well-framed problem, a defensible analysis, and a recommendation that can move into action.</strong></p>
     </div>
-    <aside class="about-right" aria-label="Quick profile">
-      <div><p class="skill-group-label">Current focus</p><p class="about-fact">Business intelligence, analytics, and decision support</p></div>
-      <div><p class="skill-group-label">Based in</p><p class="about-fact">Halifax, Nova Scotia</p></div>
-      <div><p class="skill-group-label">Education</p><p class="about-fact">Business Analytics · Mathematics</p></div>
-      <div><p class="skill-group-label">Open to</p><p class="about-fact">Business Analyst · Data Analyst · BI opportunities</p></div>
+    <aside class="about-principles" aria-label="How I create value">
+      <p class="about-principles-kicker">How I create value</p>
+      <ol class="about-process">
+        <li><span>01</span><div><strong>Frame the right question</strong><p>Clarify the decision, stakeholder needs, constraints, and definition of success before analysis begins.</p></div></li>
+        <li><span>02</span><div><strong>Build trusted evidence</strong><p>Validate the data, explore the drivers, and choose methods that fit the business problem.</p></div></li>
+        <li><span>03</span><div><strong>Translate insight into action</strong><p>Communicate the finding, its impact, and a practical next step in language teams can use.</p></div></li>
+      </ol>
     </aside>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects" style="padding-top:8rem;padding-bottom:8rem">
-  <div class="projects-inner">
-    <p class="section-label reveal">Projects</p>
-    <h2 class="section-title reveal">Work that <span>ships.</span></h2>
-    <div class="projects-grid">
+<!-- SKILLS -->
+<section id="skills" class="skills-story">
+  <div class="skills-stage">
+    <header class="skills-heading-new">
+      <p>Skills / Core competencies</p>
+      <h2>Four disciplines.<br><span>One decision system.</span></h2>
+    </header>
 
-      <div class="project-card reveal">
-        <p class="project-num">01 / MACHINE LEARNING &amp; BUSINESS ANALYTICS</p>
-        <h3 class="project-title">Credit Card Fraud Detection</h3>
-        <a href="https://github.com/DIGEN01/credit-card-fraud-detection" target="_blank" class="project-link">github.com/DIGEN01/credit-card-fraud-detection ↗</a>
-        <p class="project-desc">Designed and delivered a full end-to-end fraud detection system on real-world transaction data, structured across three phases: business question definition, analytical build, and stakeholder-ready recommendations.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Python</span>
-          <span class="tech-pill">XGBoost</span>
-          <span class="tech-pill">TensorFlow</span>
-          <span class="tech-pill">Random Forest</span>
-          <span class="tech-pill">scikit-learn</span>
-          <span class="tech-pill">Tableau</span>
-          <span class="tech-pill">SQL</span>
-        </div>
-        <ul class="project-highlights">
-          <li>Engineered 14 business-relevant features from raw transaction data by analysing the underlying drivers of fraud behaviour rather than relying on generic numeric outputs.</li>
-          <li>Built a custom ensemble model combining XGBoost, a Neural Network, and Random Forest, designing each component to cover the blind spots of the others and produce a system stronger than any single model.</li>
-          <li>Developed a four-tier transaction routing framework that translated model outputs into concrete business actions, from auto-approving low-risk transactions to flagging high-risk ones for manual review.</li>
-          <li>Built an interactive Tableau dashboard enabling stakeholders to independently explore fraud patterns by time, customer segment, and season, without requiring access to the underlying data.</li>
-          <li>Delivered a full written report in accessible, non-technical language covering model rationale, decision logic, and estimated business impact.</li>
-        </ul>
-      </div>
-
-      <div class="project-card reveal" style="transition-delay:0.15s">
-        <p class="project-num">02 / BUSINESS INTELLIGENCE &amp; SQL ANALYTICS</p>
-        <h3 class="project-title">Brazilian E-Commerce BI Analysis</h3>
-        <a href="https://github.com/DIGEN01/Brazilian-Ecommerce-Analysis" target="_blank" class="project-link">github.com/DIGEN01/Brazilian-Ecommerce-Analysis ↗</a>
-        <p class="project-desc">Conducted a comprehensive business intelligence analysis on the Olist dataset, spanning 112,650 orders across nine relational tables, to uncover customer behaviour patterns and generate actionable retention and growth strategies.</p>
-        <div class="project-tech">
-          <span class="tech-pill">MySQL</span>
-          <span class="tech-pill">Python</span>
-          <span class="tech-pill">Power BI</span>
-          <span class="tech-pill">scikit-learn</span>
-          <span class="tech-pill">K-Means</span>
-          <span class="tech-pill">Apriori</span>
-          <span class="tech-pill">Decision Tree</span>
-        </div>
-        <ul class="project-highlights">
-          <li>Defined the business questions upfront, then built a MySQL data pipeline across nine relational tables to work through each one systematically.</li>
-          <li>Identified that 97% of customers placed only a single order, surfacing a critical retention gap and informing segment-specific campaign recommendations for the marketing team.</li>
-          <li>Applied K-Means clustering to segment buyers into three behavioural groups and trained a Decision Tree classifier to predict customer segments in real time.</li>
-          <li>Used Apriori association rule mining to identify product co-purchase patterns, translating findings into concrete cross-sell and retention strategies.</li>
-          <li>Built Power BI dashboards enabling marketing and operations teams to explore customer segments and purchasing trends without needing a data background.</li>
-          <li>Produced a structured business report with recommendations written at a level of specificity that a team could act on immediately.</li>
-        </ul>
-      </div>
-
+    <div class="skill-node-field" aria-label="Skill disciplines">
+      <button class="skill-node skill-node-ba" type="button" data-skill="0" aria-label="Show BA and Process Tools"><span class="skill-node-code">BA</span><strong>BA &amp;<br>Process Tools</strong></button>
+      <button class="skill-node skill-node-data" type="button" data-skill="1" aria-label="Show Data and Analytics"><span class="skill-node-code">DA</span><strong>Data &amp;<br>Analytics</strong></button>
+      <button class="skill-node skill-node-methods" type="button" data-skill="2" aria-label="Show Methods and Frameworks"><span class="skill-node-code">MF</span><strong>Methods &amp;<br>Frameworks</strong></button>
+      <button class="skill-node skill-node-cloud" type="button" data-skill="3" aria-label="Show Cloud and Dev Tools"><span class="skill-node-code">DT</span><strong>Cloud &amp;<br>Dev Tools</strong></button>
     </div>
-    <div style="margin-top:1.5rem;text-align:center">
-      <a href="https://github.com/DIGEN01" target="_blank" class="btn-ghost" style="display:inline-flex">View all on GitHub ↗</a>
+
+    <div class="skill-detail-stack" aria-live="polite">
+      <article class="skill-detail is-active" data-detail="0">
+        <header><span>01</span><div><h3>BA &amp; Process Tools</h3><p>Discover · align · improve</p></div></header>
+        <ul class="skill-pill-list">
+          <li>Requirements gathering</li><li>Stakeholder communication</li><li>Process improvement</li><li>Root-cause analysis</li><li>Documentation</li><li>Microsoft 365</li><li>SharePoint</li>
+        </ul>
+      </article>
+      <article class="skill-detail" data-detail="1">
+        <header><span>02</span><div><h3>Data &amp; Analytics</h3><p>Query · analyse · communicate</p></div></header>
+        <div class="skill-detail-columns">
+          <div><h4>Analysis &amp; querying</h4><p>SQL · MySQL · MS SQL Server · Excel · Data cleaning · Data validation · Exploratory analysis · Statistical analysis</p></div>
+          <div><h4>Programming &amp; data science</h4><p>Python · Pandas · NumPy · scikit-learn · XGBoost · TensorFlow · Classification · Predictive modelling</p></div>
+          <div><h4>BI &amp; visualization</h4><p>Power BI · Tableau · Excel dashboards · KPI reporting · Data storytelling</p></div>
+        </div>
+      </article>
+      <article class="skill-detail" data-detail="2">
+        <header><span>03</span><div><h3>Methods &amp; Frameworks</h3><p>Structure · adapt · deliver</p></div></header>
+        <ul class="skill-pill-list skill-pill-list-short"><li>Agile methodology</li><li>Waterfall methodology</li></ul>
+      </article>
+      <article class="skill-detail" data-detail="3">
+        <header><span>04</span><div><h3>Cloud &amp; Dev Tools</h3><p>Build · version · collaborate</p></div></header>
+        <ul class="skill-pill-list"><li>Azure</li><li>Git</li><li>VS Code</li><li>Jupyter Notebook</li><li>Windows environments</li></ul>
+      </article>
+    </div>
+
+    <div class="skills-status" aria-hidden="true"><span class="skills-status-current">01</span><i></i><span>04</span></div>
+    <div class="skill-handoff-card" aria-hidden="true"><span></span><i></i><b>DN / ANALYTICS</b></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="project-story">
+  <div class="project-stage">
+    <header class="project-heading">
+      <p>Selected projects</p>
+      <h2>From signal to <span>business action.</span></h2>
+      <div class="project-count" aria-hidden="true"><strong>01</strong><i></i><span>02</span></div>
+    </header>
+
+    <div class="project-object-layer" aria-hidden="true">
+      <div class="credit-card-object">
+        <div class="card-shine"></div><span class="card-chip"></span><span class="card-signal"></span>
+        <p>FRAUD INTELLIGENCE</p><strong>•••• &nbsp; 4082 &nbsp; 7719 &nbsp; 2036</strong><small>RISK / 0.94</small>
+      </div>
+      <svg class="shopping-cart-object" viewBox="0 0 420 320" role="img" aria-label="Abstract shopping cart">
+        <defs><linearGradient id="cartGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
+        <path d="M46 58h45l34 153h185l46-109H110"/><path d="M138 140h184M172 101l-8 110M235 101l3 110M298 101l-14 110"/>
+        <circle cx="164" cy="258" r="20"/><circle cx="295" cy="258" r="20"/><path class="cart-data-line" d="M102 78c58-55 155-61 244-18"/><path class="cart-data-line" d="M126 232c71 35 151 37 214 3"/>
+      </svg>
+    </div>
+
+    <div class="project-track">
+      <article class="project-panel fraud-panel">
+        <div class="project-content fraud-content">
+          <p class="project-num">01 / MACHINE LEARNING &amp; BUSINESS ANALYTICS</p>
+          <h3 class="project-title">Credit Card<br>Fraud Detection</h3>
+          <a href="https://github.com/DIGEN01/credit-card-fraud-detection" target="_blank" rel="noreferrer" class="project-link">View project on GitHub ↗</a>
+          <p class="project-desc">Designed and delivered a full end-to-end fraud detection system on real-world transaction data, structured across business question definition, analytical build, and stakeholder-ready recommendations.</p>
+          <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">XGBoost</span><span class="tech-pill">TensorFlow</span><span class="tech-pill">Random Forest</span><span class="tech-pill">scikit-learn</span><span class="tech-pill">Tableau</span><span class="tech-pill">SQL</span></div>
+          <ul class="project-highlights">
+            <li>Engineered 14 business-relevant features from raw transaction data by analysing the underlying drivers of fraud behaviour.</li>
+            <li>Built a custom ensemble combining XGBoost, a neural network, and Random Forest so each model covered the blind spots of the others.</li>
+            <li>Developed a four-tier transaction routing framework that translated risk scores into concrete business actions.</li>
+            <li>Built an interactive Tableau dashboard for exploring patterns by time, customer segment, and season.</li>
+            <li>Delivered an accessible report covering model rationale, decision logic, and estimated business impact.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="project-panel commerce-panel">
+        <div class="project-content commerce-content">
+          <p class="project-num">02 / BUSINESS INTELLIGENCE &amp; SQL ANALYTICS</p>
+          <h3 class="project-title">Brazilian E-Commerce<br>BI Analysis</h3>
+          <a href="https://github.com/DIGEN01/Brazilian-Ecommerce-Analysis" target="_blank" rel="noreferrer" class="project-link">View project on GitHub ↗</a>
+          <p class="project-desc">Analysed 112,650 Olist orders across nine relational tables to uncover customer behaviour patterns and create actionable retention and growth strategies.</p>
+          <div class="project-tech"><span class="tech-pill">MySQL</span><span class="tech-pill">Python</span><span class="tech-pill">Power BI</span><span class="tech-pill">scikit-learn</span><span class="tech-pill">K-Means</span><span class="tech-pill">Apriori</span><span class="tech-pill">Decision Tree</span></div>
+          <ul class="project-highlights">
+            <li>Built a MySQL pipeline across nine relational tables to answer clearly defined business questions.</li>
+            <li>Identified that 97% of customers placed only one order, surfacing a critical retention opportunity.</li>
+            <li>Segmented buyers with K-Means and trained a Decision Tree to classify customer segments.</li>
+            <li>Used Apriori association rules to turn co-purchase patterns into cross-sell recommendations.</li>
+            <li>Built Power BI dashboards for marketing and operations teams without a data background.</li>
+            <li>Produced a structured report with recommendations specific enough to act on immediately.</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -923,21 +1073,20 @@
   <p>Halifax, NS · digenpnaik@gmail.com</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 // ── Particle field + 3D analytics core ───────────────────────────
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 const heroSection = document.getElementById('hero');
 const heroCopy = document.querySelector('.hero-inner');
-const skillsHeading = document.querySelector('.skills-heading');
-const connectors = document.querySelector('.skill-connectors');
-const coreCaption = document.querySelector('.core-caption');
-const desktopBranches = [...document.querySelectorAll('.skill-network .skill-branch')];
 const scrollCue = document.querySelector('.scroll-cue');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let W = 0, H = 0, DPR = 1, storyProgress = 0, storyVisible = true;
 let pointerX = 0, pointerY = 0, sphereRotation = 0;
 let particles = [];
+const coreScene = { active: false, x: 0.5, y: 0.455, r: 0.19, opacity: 1, decor: 0 };
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const lerp = (a, b, amount) => a + (b - a) * amount;
@@ -1091,27 +1240,26 @@ function updateStory() {
   if (!heroSection) return;
   const rect=heroSection.getBoundingClientRect(), mobile=W<=768;
   storyVisible=rect.bottom>0&&rect.top<H;
-  if (mobile) {
-    storyProgress=0;
-    return;
-  }
-  storyProgress=clamp(-rect.top/Math.max(1,heroSection.offsetHeight-H));
-  const heroFade=1-smooth(.1,.31,storyProgress), skillFade=smooth(.39,.56,storyProgress), connectorFade=smooth(.49,.66,storyProgress);
-  heroCopy.style.opacity=heroFade;heroCopy.style.transform=`translateY(-48%) translateX(${-storyProgress*55}px)`;heroCopy.style.filter=`blur(${(1-heroFade)*6}px)`;
-  scrollCue.style.opacity=1-smooth(.03,.18,storyProgress);
-  skillsHeading.style.opacity=skillFade;skillsHeading.style.transform=`translateX(-50%) translateY(${(1-skillFade)*14}px)`;
-  connectors.style.opacity=connectorFade;coreCaption.style.opacity=smooth(.58,.76,storyProgress);
-  desktopBranches.forEach((branch,index)=>{const reveal=smooth(.53+index*.055,.67+index*.055,storyProgress);branch.style.opacity=reveal;branch.style.transform=`scale(${.9+reveal*.1}) translateY(${(1-reveal)*12}px)`;});
+  storyProgress=clamp(-rect.top/Math.max(1,heroSection.offsetHeight*.82));
+  if (mobile) return;
+  const heroFade=1-smooth(.06,.72,storyProgress);
+  heroCopy.style.opacity=heroFade;
+  heroCopy.style.transform=`translateY(-48%) translateX(${-storyProgress*42}px)`;
+  heroCopy.style.filter=`blur(${(1-heroFade)*5}px)`;
+  scrollCue.style.opacity=1-smooth(.03,.28,storyProgress);
 }
 
 function animateCanvas() {
   ctx.clearRect(0,0,W,H);drawBackground();
-  if (storyVisible) {
-    const mobile=W<=768, move=mobile?0:smooth(.08,.46,storyProgress), open=mobile?0:smooth(.48,.79,storyProgress);
-    const cx=mobile?W*.73:lerp(W*.735,W*.5,move), cy=mobile?H*.72:H*.5, base=Math.min(W,H)*(mobile?.19:.245);
-    const expanded=lerp(base,base*1.1,move), radius=lerp(expanded,Math.min(W,H)*.12,open);
-    const mobileFade=mobile?1-smooth(.42,.9,window.scrollY/Math.max(1,H)):1;
-    drawDecor(cx,cy,radius,move<.75?(1-move)*mobileFade:0);drawCore(cx,cy,radius,mobileFade);
+  if (coreScene.active) {
+    const radius=Math.min(W,H)*coreScene.r;
+    drawDecor(W*coreScene.x,H*coreScene.y,radius,coreScene.decor*coreScene.opacity);
+    drawCore(W*coreScene.x,H*coreScene.y,radius,coreScene.opacity);
+  } else if (storyVisible) {
+    const mobile=W<=768;
+    const cx=mobile?W*.72:W*.735, cy=mobile?H*.73:H*.5, radius=Math.min(W,H)*(mobile?.18:.245);
+    const opacity=1-smooth(mobile?.34:.42,mobile?.88:.94,storyProgress);
+    drawDecor(cx,cy,radius,opacity);drawCore(cx,cy,radius,opacity);
   }
   if (!reduceMotion) sphereRotation+=.00145;
   requestAnimationFrame(animateCanvas);
@@ -1132,7 +1280,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
   ring.style.left   = rx+'px'; ring.style.top  = ry+'px';
   requestAnimationFrame(trackRing);
 })();
-document.querySelectorAll('a, button, .project-card, .edu-card, .skill-tag, .skill-branch').forEach(el => {
+document.querySelectorAll('a, button, .project-card, .edu-card, .skill-tag, .skill-branch, .skill-node').forEach(el => {
   el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.transform='translate(-50%,-50%) scale(1.5)'; ring.style.borderColor='rgba(0,229,255,0.8)'; });
   el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; ring.style.borderColor='rgba(0,229,255,0.5)'; });
 });
@@ -1142,6 +1290,141 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+// Pinned skills and horizontal project stories
+let skillsScrollTrigger = null;
+
+function setSkillUI(index) {
+  const nodes = [...document.querySelectorAll('.skill-node')];
+  const status = document.querySelector('.skills-status-current');
+  nodes.forEach((node,nodeIndex) => {
+    const active=nodeIndex===index;
+    node.classList.toggle('is-active',active);
+    node.setAttribute('aria-pressed',String(active));
+  });
+  if (status) status.textContent=String(index+1).padStart(2,'0');
+}
+
+document.querySelectorAll('.skill-node').forEach((node,index) => {
+  node.addEventListener('click',() => {
+    if (window.innerWidth<=768 || reduceMotion || !skillsScrollTrigger) {
+      document.querySelector(`.skill-detail[data-detail="${index}"]`)?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
+      return;
+    }
+    const points=[.18,.35,.52,.68];
+    window.scrollTo({top:lerp(skillsScrollTrigger.start,skillsScrollTrigger.end,points[index]),behavior:'smooth'});
+  });
+});
+
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+  const motionMedia=gsap.matchMedia();
+
+  motionMedia.add('(min-width: 769px) and (prefers-reduced-motion: no-preference)',() => {
+    const skillNodes=gsap.utils.toArray('.skill-node');
+    const skillDetails=gsap.utils.toArray('.skill-detail');
+    const skillHeading=document.querySelector('.skills-heading-new');
+    const handoffCard=document.querySelector('.skill-handoff-card');
+    const nodePositions=[.22,.405,.595,.78];
+    const centerDelta=index => window.innerWidth*(.5-nodePositions[index]);
+
+    gsap.set(skillNodes,{autoAlpha:0,scale:.1,x:centerDelta});
+    gsap.set(skillDetails,{autoAlpha:0,y:14});
+    gsap.set(handoffCard,{autoAlpha:0,scale:.16,rotationY:-90});
+
+    const skillsTimeline=gsap.timeline({
+      defaults:{ease:'power2.inOut'},
+      scrollTrigger:{
+        trigger:'.skills-story',
+        start:'top top',
+        end:'+=3600',
+        pin:'.skills-stage',
+        scrub:1,
+        anticipatePin:1,
+        invalidateOnRefresh:true,
+        onEnter:() => { coreScene.active=true; },
+        onEnterBack:() => { coreScene.active=true; },
+        onLeave:() => { coreScene.active=false; },
+        onLeaveBack:() => { coreScene.active=false; },
+        onRefresh:self => { coreScene.active=self.isActive; },
+        onUpdate:self => {
+          const progress=self.progress;
+          const index=progress<.29?0:progress<.45?1:progress<.61?2:3;
+          setSkillUI(index);
+        }
+      }
+    });
+    skillsScrollTrigger=skillsTimeline.scrollTrigger;
+
+    skillsTimeline
+      .fromTo(skillHeading,{autoAlpha:0,y:18},{autoAlpha:1,y:0,duration:.3},0)
+      .to(coreScene,{r:.065,opacity:.06,duration:.58},.06)
+      .to(skillNodes,{autoAlpha:.5,scale:.94,x:0,duration:.48,stagger:.055},.15);
+
+    [0,1,2,3].forEach((index) => {
+      const start=.55+index*.77;
+      skillsTimeline
+        .to(skillNodes[index],{autoAlpha:1,scale:1.1,duration:.2},start)
+        .to(skillDetails[index],{autoAlpha:1,y:0,duration:.25},start);
+      if (index<3) {
+        skillsTimeline
+          .to(skillDetails[index],{autoAlpha:0,y:-12,duration:.2},start+.5)
+          .to(skillNodes[index],{autoAlpha:.5,scale:.94,duration:.2},start+.5);
+      }
+    });
+
+    skillsTimeline
+      .to(skillDetails[3],{autoAlpha:0,y:-12,duration:.2},3.46)
+      .to(skillNodes[3],{autoAlpha:.5,scale:.94,duration:.2},3.46)
+      .to(skillHeading,{autoAlpha:.16,duration:.32},3.55)
+      .to(skillNodes,{x:centerDelta,scale:.12,autoAlpha:0,duration:.5,stagger:.035},3.6)
+      .to(handoffCard,{autoAlpha:1,scale:1,rotationY:0,duration:.5},3.9);
+
+    const projectTrack=document.querySelector('.project-track');
+    const fraudContent=document.querySelector('.fraud-content');
+    const commerceContent=document.querySelector('.commerce-content');
+    const creditCard=document.querySelector('.credit-card-object');
+    const cart=document.querySelector('.shopping-cart-object');
+    const projectCount=document.querySelector('.project-count strong');
+
+    gsap.set(commerceContent,{autoAlpha:0,x:95});
+    gsap.set(projectTrack,{xPercent:0});
+    gsap.set(cart,{autoAlpha:0,scale:.35,rotation:-14});
+
+    const projectTimeline=gsap.timeline({
+      defaults:{ease:'power2.inOut'},
+      scrollTrigger:{
+        trigger:'.project-story',
+        start:'top top',
+        end:'+=3000',
+        pin:'.project-stage',
+        scrub:1,
+        anticipatePin:1,
+        invalidateOnRefresh:true,
+        onUpdate:self => { if (projectCount) projectCount.textContent=self.progress<.57?'01':'02'; }
+      }
+    });
+
+    projectTimeline
+      .fromTo(creditCard,{autoAlpha:.78,x:() => -window.innerWidth*.25,y:50,scale:.48,rotationY:0,rotationZ:0},{autoAlpha:.74,x:0,y:0,scale:1,rotationY:-10,rotationZ:-3,duration:.42},0)
+      .fromTo(fraudContent,{autoAlpha:0,x:55},{autoAlpha:1,x:0,duration:.34},.14)
+      .to(creditCard,{autoAlpha:.16,scale:1.2,rotationY:16,rotationZ:-1,duration:.52},.5)
+      .to(fraudContent,{autoAlpha:0,x:-90,duration:.32},1.18)
+      .to(projectTrack,{xPercent:-50,duration:.85,ease:'none'},1.18)
+      .to(creditCard,{autoAlpha:0,scale:.25,rotationY:170,rotationZ:12,duration:.66},1.18)
+      .to(cart,{autoAlpha:.2,scale:1,rotation:0,duration:.66},1.28)
+      .to(commerceContent,{autoAlpha:1,x:0,duration:.4},1.62)
+      .to(cart,{autoAlpha:.13,scale:1.1,duration:.42},1.7);
+
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+
+    return () => {
+      skillsScrollTrigger=null;
+      coreScene.active=false;
+      gsap.set([...skillNodes,...skillDetails,handoffCard,projectTrack,fraudContent,commerceContent,creditCard,cart],{clearProps:'all'});
+    };
+  });
+}
 
 // ── Theme toggle ─────────────────────────────────────────────────
 const themeToggle = document.getElementById('themeToggle');
@@ -1159,7 +1442,6 @@ const navAs = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let cur='';
   secs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) cur = s.id; });
-  if (cur === 'hero' && storyProgress > 0.28) cur = 'skills';
   navAs.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--accent)' : ''; });
 }, { passive: true });
 </script>
