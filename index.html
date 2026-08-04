@@ -759,6 +759,113 @@
     .project-content { width: min(68.75rem,100%); margin: 0 auto; opacity: 1 !important; transform: none !important; }
   }
 
+  /* Scroll-story alignment rebuild */
+  #about { min-height: 100vh; padding-top: 8rem; padding-bottom: 8rem; }
+  #about .about-grid { width: 100%; max-width: 1100px; grid-template-columns: minmax(0,0.58fr) 0.42fr; gap: 0; align-items: center; padding-top: clamp(4rem,9vh,7rem); }
+  .simple-section-title { margin-bottom: 2.2rem; font-size: clamp(2.5rem,4vw,4.4rem); line-height: 1; letter-spacing: -0.05em; }
+
+  #skills.skills-story, #projects.project-story { height: auto; min-height: 0; padding: 0; }
+  .skills-stage, .project-stage { height: 100vh; min-height: 720px; }
+
+  .skills-heading-new { top: clamp(5.6rem,9.5vh,6.5rem); left: clamp(2rem,6.3vw,6.75rem); width: auto; }
+  .skills-heading-new h2, .project-heading h2 { color: var(--text); font-size: clamp(2.1rem,3vw,3.15rem); line-height: 1; letter-spacing: -0.045em; }
+  .skills-heading-new h2::after, .project-heading h2::after { content: ''; display: block; width: 3.5rem; height: 1px; margin-top: 0.7rem; background: linear-gradient(90deg,var(--accent),var(--accent2)); }
+
+  .skill-node-field { pointer-events: none; }
+  .skill-node {
+    top: 29%;
+    width: clamp(6.5rem,7.6vw,7.8rem);
+    cursor: default;
+  }
+  .skill-node:nth-child(1) { left: 20%; }
+  .skill-node:nth-child(2) { left: 40%; }
+  .skill-node:nth-child(3) { left: 60%; }
+  .skill-node:nth-child(4) { left: 80%; }
+
+  .skill-detail-stack {
+    top: 45%;
+    bottom: 3.4rem;
+    width: min(92rem,calc(100% - 5rem));
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: clamp(0.65rem,1.15vw,1.1rem);
+  }
+  .skill-detail, .skill-detail.is-active {
+    position: relative;
+    inset: auto;
+    display: block;
+    min-width: 0;
+    padding: clamp(1rem,1.5vw,1.4rem);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    overflow: hidden;
+  }
+  .skill-detail::before { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: linear-gradient(90deg,var(--accent),var(--accent2),transparent 85%); opacity: 0.65; }
+  .skill-detail header { display: grid; grid-template-columns: 2rem 1fr; gap: 0.65rem; margin-bottom: 1rem; }
+  .skill-detail header > span { width: 1.9rem; height: 1.9rem; font-size: 0.52rem; }
+  .skill-detail h3 { font-size: clamp(0.88rem,1vw,1.05rem); line-height: 1.15; }
+  .skill-detail header p { font-size: 0.47rem; line-height: 1.45; }
+  .skill-rectangle-copy { color: #a9bac3; font-size: clamp(0.66rem,0.76vw,0.76rem); line-height: 1.75; }
+  .skill-detail-columns { grid-template-columns: 1fr; gap: 0.72rem; }
+  .skill-detail-columns h4 { margin-bottom: 0.25rem; padding-bottom: 0.25rem; font-size: 0.48rem; }
+  .skill-detail-columns p { font-size: clamp(0.57rem,0.64vw,0.66rem); line-height: 1.58; }
+
+  .skill-handoff-card {
+    top: 57%;
+    width: min(50rem,72vw);
+    height: 8.5rem;
+    padding: 0;
+    border-radius: 0.85rem;
+    overflow: hidden;
+  }
+  .merge-summary { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4,1fr); align-items: center; padding: 1.5rem 2rem; }
+  .merge-summary span { display: grid; place-items: center; width: auto; height: 2.3rem; border: 0; border-right: 1px solid rgba(0,229,255,0.18); border-radius: 0; color: var(--accent); background: transparent; font: 0.62rem var(--mono); letter-spacing: 0.14em; }
+  .merge-summary span:nth-child(4) { border-right: 0; }
+  .merge-summary b { position: static; grid-column: 1 / -1; text-align: center; color: var(--muted); font: 0.54rem var(--mono); letter-spacing: 0.18em; text-transform: uppercase; }
+  .merge-card-face { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+  .merge-chip { position: absolute; left: 1.5rem; top: 1.5rem; display: block; width: 2.6rem; height: 2rem; border: 1px solid rgba(255,255,255,0.45); border-radius: 0.35rem; background: linear-gradient(90deg,transparent 47%,rgba(255,255,255,0.3) 48% 52%,transparent 53%); }
+  .merge-card-face i { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 3.2rem; height: 1px; background: rgba(255,255,255,0.23); }
+  .merge-card-face strong { position: absolute; left: 1.5rem; bottom: 3.65rem; font: 0.64rem var(--mono); letter-spacing: 0.09em; }
+  .merge-card-face b { position: absolute; left: 1.5rem; bottom: 1.3rem; font: 0.58rem var(--mono); letter-spacing: 0.14em; }
+
+  .project-heading { top: clamp(5.6rem,9.5vh,6.5rem); align-items: center; }
+  .project-heading h2 { grid-column: 1; }
+  .project-count { grid-column: 2; grid-row: 1; padding-bottom: 0; }
+  .project-panel { padding-top: 11.25rem; }
+
+  html[data-theme="light"] .skill-rectangle-copy { color: #3c5864; }
+
+  @media (max-width: 768px) {
+    #about { min-height: 0; padding-top: 5rem; padding-bottom: 5rem; }
+    #about .about-grid { display: block; padding-top: 4rem; }
+    .simple-section-title { font-size: clamp(2.5rem,12vw,3.5rem); }
+
+    .skills-stage, .project-stage { height: auto; min-height: 0; }
+    .skills-heading-new, .project-heading { position: relative; inset: auto; width: 100%; margin: 0 0 2.5rem; padding: 0; }
+    .skills-heading-new h2, .project-heading h2 { font-size: clamp(2.35rem,11vw,3.25rem); }
+    .skill-node-field { grid-template-columns: 1fr 1fr; }
+    .skill-node, .skill-node:nth-child(n) { width: min(34vw,7.4rem); }
+    .skill-detail-stack { position: relative; inset: auto; width: 100%; grid-template-columns: 1fr; transform: none; }
+    .skill-detail, .skill-detail.is-active { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    .skill-handoff-card { display: none !important; }
+    .project-count { margin-top: 1rem; }
+    .project-panel { padding-top: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (min-width: 769px) {
+    #skills.skills-story, #projects.project-story { height: auto; min-height: 0; }
+    .skills-stage, .project-stage { height: auto; min-height: 0; padding: 7rem 3rem; overflow: visible; }
+    .skills-heading-new, .project-heading { position: relative; inset: auto; width: min(92rem,100%); margin: 0 auto 3rem; }
+    .skill-node-field { position: relative; inset: auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; max-width: 70rem; margin: 0 auto 3rem; }
+    .skill-node, .skill-node:nth-child(n) { position: relative; inset: auto; transform: none; opacity: 1; }
+    .skill-detail-stack { position: relative; inset: auto; width: min(92rem,100%); transform: none; margin: 0 auto; }
+    .skill-detail, .skill-detail.is-active { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    .skill-handoff-card, .project-object-layer, .project-count { display: none; }
+    .project-track { width: 100%; height: auto; display: grid; gap: 2rem; }
+    .project-panel { width: 100%; height: auto; padding: 0; }
+  }
+
   @media (hover: none), (pointer: coarse) {
     body, a, button, .project-card, .skill-node { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
@@ -818,22 +925,13 @@
 <!-- ABOUT -->
 <section id="about">
   <div style="max-width:1100px;margin:0 auto"><div class="section-divider"></div></div>
-  <div class="about-grid reveal" style="padding-top:5rem">
+  <div class="about-grid reveal">
     <div class="about-text">
-      <p class="section-label">About</p>
-      <h2 class="section-title">Clarity before<br><span>complexity.</span></h2>
+      <h2 class="simple-section-title">About</h2>
       <p>I'm a business analyst with a quantitative foundation and hands-on experience turning ambiguous questions into analysis people can act on. I connect <strong>business context, trusted data, and clear communication</strong> so decisions are supported by evidence rather than assumptions.</p>
       <p>My Business Analytics studies at Cape Breton University build on a <strong>B.Sc. in Mathematics</strong> and practical work across SQL, Python, Power BI, Tableau, statistical analysis, and machine learning. I am equally comfortable examining the detail and explaining what it means to a non-technical audience.</p>
       <p>Whether the work calls for an Agile feedback loop or a structured Waterfall delivery, I focus on the same outcome: <strong>a well-framed problem, a defensible analysis, and a recommendation that can move into action.</strong></p>
     </div>
-    <aside class="about-principles" aria-label="How I create value">
-      <p class="about-principles-kicker">How I create value</p>
-      <ol class="about-process">
-        <li><span>01</span><div><strong>Frame the right question</strong><p>Clarify the decision, stakeholder needs, constraints, and definition of success before analysis begins.</p></div></li>
-        <li><span>02</span><div><strong>Build trusted evidence</strong><p>Validate the data, explore the drivers, and choose methods that fit the business problem.</p></div></li>
-        <li><span>03</span><div><strong>Translate insight into action</strong><p>Communicate the finding, its impact, and a practical next step in language teams can use.</p></div></li>
-      </ol>
-    </aside>
   </div>
 </section>
 
@@ -841,23 +939,20 @@
 <section id="skills" class="skills-story">
   <div class="skills-stage">
     <header class="skills-heading-new">
-      <p>Skills / Core competencies</p>
-      <h2>Four disciplines.<br><span>One decision system.</span></h2>
+      <h2>Skills</h2>
     </header>
 
     <div class="skill-node-field" aria-label="Skill disciplines">
-      <button class="skill-node skill-node-ba" type="button" data-skill="0" aria-label="Show BA and Process Tools"><span class="skill-node-code">BA</span><strong>BA &amp;<br>Process Tools</strong></button>
-      <button class="skill-node skill-node-data" type="button" data-skill="1" aria-label="Show Data and Analytics"><span class="skill-node-code">DA</span><strong>Data &amp;<br>Analytics</strong></button>
-      <button class="skill-node skill-node-methods" type="button" data-skill="2" aria-label="Show Methods and Frameworks"><span class="skill-node-code">MF</span><strong>Methods &amp;<br>Frameworks</strong></button>
-      <button class="skill-node skill-node-cloud" type="button" data-skill="3" aria-label="Show Cloud and Dev Tools"><span class="skill-node-code">DT</span><strong>Cloud &amp;<br>Dev Tools</strong></button>
+      <div class="skill-node skill-node-ba"><span class="skill-node-code">BA</span><strong>BA &amp;<br>Process Tools</strong></div>
+      <div class="skill-node skill-node-data"><span class="skill-node-code">DA</span><strong>Data &amp;<br>Analytics</strong></div>
+      <div class="skill-node skill-node-methods"><span class="skill-node-code">MF</span><strong>Methods &amp;<br>Frameworks</strong></div>
+      <div class="skill-node skill-node-cloud"><span class="skill-node-code">DT</span><strong>Cloud &amp;<br>Dev Tools</strong></div>
     </div>
 
-    <div class="skill-detail-stack" aria-live="polite">
-      <article class="skill-detail is-active" data-detail="0">
+    <div class="skill-detail-stack" aria-label="Detailed skills">
+      <article class="skill-detail" data-detail="0">
         <header><span>01</span><div><h3>BA &amp; Process Tools</h3><p>Discover · align · improve</p></div></header>
-        <ul class="skill-pill-list">
-          <li>Requirements gathering</li><li>Stakeholder communication</li><li>Process improvement</li><li>Root-cause analysis</li><li>Documentation</li><li>Microsoft 365</li><li>SharePoint</li>
-        </ul>
+        <p class="skill-rectangle-copy">Requirements gathering · Stakeholder communication · Process improvement · Root-cause analysis · Documentation · Microsoft 365 · SharePoint</p>
       </article>
       <article class="skill-detail" data-detail="1">
         <header><span>02</span><div><h3>Data &amp; Analytics</h3><p>Query · analyse · communicate</p></div></header>
@@ -869,16 +964,18 @@
       </article>
       <article class="skill-detail" data-detail="2">
         <header><span>03</span><div><h3>Methods &amp; Frameworks</h3><p>Structure · adapt · deliver</p></div></header>
-        <ul class="skill-pill-list skill-pill-list-short"><li>Agile methodology</li><li>Waterfall methodology</li></ul>
+        <p class="skill-rectangle-copy">Agile methodology · Waterfall methodology</p>
       </article>
       <article class="skill-detail" data-detail="3">
         <header><span>04</span><div><h3>Cloud &amp; Dev Tools</h3><p>Build · version · collaborate</p></div></header>
-        <ul class="skill-pill-list"><li>Azure</li><li>Git</li><li>VS Code</li><li>Jupyter Notebook</li><li>Windows environments</li></ul>
+        <p class="skill-rectangle-copy">Azure · Git · VS Code · Jupyter Notebook · Windows environments</p>
       </article>
     </div>
 
-    <div class="skills-status" aria-hidden="true"><span class="skills-status-current">01</span><i></i><span>04</span></div>
-    <div class="skill-handoff-card" aria-hidden="true"><span></span><i></i><b>DN / ANALYTICS</b></div>
+    <div class="skill-handoff-card" aria-hidden="true">
+      <div class="merge-summary"><span>BA</span><span>DATA</span><span>METHODS</span><span>TOOLS</span><b>Connected capability</b></div>
+      <div class="merge-card-face"><span class="merge-chip"></span><i></i><strong>•••• &nbsp; 4082 &nbsp; 7719 &nbsp; 2036</strong><b>DN / ANALYTICS</b></div>
+    </div>
   </div>
 </section>
 
@@ -886,8 +983,7 @@
 <section id="projects" class="project-story">
   <div class="project-stage">
     <header class="project-heading">
-      <p>Selected projects</p>
-      <h2>From signal to <span>business action.</span></h2>
+      <h2>Projects</h2>
       <div class="project-count" aria-hidden="true"><strong>01</strong><i></i><span>02</span></div>
     </header>
 
@@ -1080,13 +1176,14 @@
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 const heroSection = document.getElementById('hero');
+const skillsSection = document.getElementById('skills');
 const heroCopy = document.querySelector('.hero-inner');
 const scrollCue = document.querySelector('.scroll-cue');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let W = 0, H = 0, DPR = 1, storyProgress = 0, storyVisible = true;
 let pointerX = 0, pointerY = 0, sphereRotation = 0;
 let particles = [];
-const coreScene = { active: false, x: 0.5, y: 0.455, r: 0.19, opacity: 1, decor: 0 };
+const coreScene = { active: false, x: 0.735, y: 0.5, r: 0.245, opacity: 1, decor: 1 };
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const lerp = (a, b, amount) => a + (b - a) * amount;
@@ -1237,9 +1334,9 @@ function drawCore(cx, cy, radius, opacity) {
 }
 
 function updateStory() {
-  if (!heroSection) return;
-  const rect=heroSection.getBoundingClientRect(), mobile=W<=768;
-  storyVisible=rect.bottom>0&&rect.top<H;
+  if (!heroSection || !skillsSection) return;
+  const rect=heroSection.getBoundingClientRect(), skillsRect=skillsSection.getBoundingClientRect(), mobile=W<=768;
+  storyVisible=skillsRect.top>0;
   storyProgress=clamp(-rect.top/Math.max(1,heroSection.offsetHeight*.82));
   if (mobile) return;
   const heroFade=1-smooth(.06,.72,storyProgress);
@@ -1258,8 +1355,7 @@ function animateCanvas() {
   } else if (storyVisible) {
     const mobile=W<=768;
     const cx=mobile?W*.72:W*.735, cy=mobile?H*.73:H*.5, radius=Math.min(W,H)*(mobile?.18:.245);
-    const opacity=1-smooth(mobile?.34:.42,mobile?.88:.94,storyProgress);
-    drawDecor(cx,cy,radius,opacity);drawCore(cx,cy,radius,opacity);
+    drawDecor(cx,cy,radius,1);drawCore(cx,cy,radius,1);
   }
   if (!reduceMotion) sphereRotation+=.00145;
   requestAnimationFrame(animateCanvas);
@@ -1292,30 +1388,6 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
 
 // Pinned skills and horizontal project stories
-let skillsScrollTrigger = null;
-
-function setSkillUI(index) {
-  const nodes = [...document.querySelectorAll('.skill-node')];
-  const status = document.querySelector('.skills-status-current');
-  nodes.forEach((node,nodeIndex) => {
-    const active=nodeIndex===index;
-    node.classList.toggle('is-active',active);
-    node.setAttribute('aria-pressed',String(active));
-  });
-  if (status) status.textContent=String(index+1).padStart(2,'0');
-}
-
-document.querySelectorAll('.skill-node').forEach((node,index) => {
-  node.addEventListener('click',() => {
-    if (window.innerWidth<=768 || reduceMotion || !skillsScrollTrigger) {
-      document.querySelector(`.skill-detail[data-detail="${index}"]`)?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
-      return;
-    }
-    const points=[.18,.35,.52,.68];
-    window.scrollTo({top:lerp(skillsScrollTrigger.start,skillsScrollTrigger.end,points[index]),behavior:'smooth'});
-  });
-});
-
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   const motionMedia=gsap.matchMedia();
@@ -1325,20 +1397,33 @@ if (window.gsap && window.ScrollTrigger) {
     const skillDetails=gsap.utils.toArray('.skill-detail');
     const skillHeading=document.querySelector('.skills-heading-new');
     const handoffCard=document.querySelector('.skill-handoff-card');
-    const nodePositions=[.22,.405,.595,.78];
-    const centerDelta=index => window.innerWidth*(.5-nodePositions[index]);
+    const mergeSummary=document.querySelector('.merge-summary');
+    const mergeCardFace=document.querySelector('.merge-card-face');
+    const nodePositions=[.2,.4,.6,.8];
+    const nodeStartX=index => window.innerWidth*(.735-nodePositions[index]);
+    const nodeStartY=() => window.innerHeight*(.5-.29);
+    const detailCenterX=(index,element) => {
+      const rect=element.getBoundingClientRect();
+      return window.innerWidth*.5-(rect.left+rect.width*.5);
+    };
+    const detailCenterY=(index,element) => {
+      const rect=element.getBoundingClientRect();
+      return window.innerHeight*.57-(rect.top+rect.height*.5);
+    };
 
-    gsap.set(skillNodes,{autoAlpha:0,scale:.1,x:centerDelta});
-    gsap.set(skillDetails,{autoAlpha:0,y:14});
-    gsap.set(handoffCard,{autoAlpha:0,scale:.16,rotationY:-90});
+    gsap.set(skillNodes,{autoAlpha:0,scale:.08,x:nodeStartX,y:nodeStartY});
+    gsap.set(skillDetails,{autoAlpha:0,y:24,scale:.96});
+    gsap.set(handoffCard,{autoAlpha:0,scale:.28,rotationY:0});
+    gsap.set(mergeCardFace,{autoAlpha:0});
 
     const skillsTimeline=gsap.timeline({
       defaults:{ease:'power2.inOut'},
       scrollTrigger:{
-        trigger:'.skills-story',
+        trigger:'.skills-stage',
         start:'top top',
-        end:'+=3600',
-        pin:'.skills-stage',
+        end:'+=3200',
+        pin:true,
+        pinSpacing:true,
         scrub:1,
         anticipatePin:1,
         invalidateOnRefresh:true,
@@ -1346,39 +1431,23 @@ if (window.gsap && window.ScrollTrigger) {
         onEnterBack:() => { coreScene.active=true; },
         onLeave:() => { coreScene.active=false; },
         onLeaveBack:() => { coreScene.active=false; },
-        onRefresh:self => { coreScene.active=self.isActive; },
-        onUpdate:self => {
-          const progress=self.progress;
-          const index=progress<.29?0:progress<.45?1:progress<.61?2:3;
-          setSkillUI(index);
-        }
-      }
-    });
-    skillsScrollTrigger=skillsTimeline.scrollTrigger;
-
-    skillsTimeline
-      .fromTo(skillHeading,{autoAlpha:0,y:18},{autoAlpha:1,y:0,duration:.3},0)
-      .to(coreScene,{r:.065,opacity:.06,duration:.58},.06)
-      .to(skillNodes,{autoAlpha:.5,scale:.94,x:0,duration:.48,stagger:.055},.15);
-
-    [0,1,2,3].forEach((index) => {
-      const start=.55+index*.77;
-      skillsTimeline
-        .to(skillNodes[index],{autoAlpha:1,scale:1.1,duration:.2},start)
-        .to(skillDetails[index],{autoAlpha:1,y:0,duration:.25},start);
-      if (index<3) {
-        skillsTimeline
-          .to(skillDetails[index],{autoAlpha:0,y:-12,duration:.2},start+.5)
-          .to(skillNodes[index],{autoAlpha:.5,scale:.94,duration:.2},start+.5);
+        onRefresh:self => { coreScene.active=self.isActive; }
       }
     });
 
     skillsTimeline
-      .to(skillDetails[3],{autoAlpha:0,y:-12,duration:.2},3.46)
-      .to(skillNodes[3],{autoAlpha:.5,scale:.94,duration:.2},3.46)
-      .to(skillHeading,{autoAlpha:.16,duration:.32},3.55)
-      .to(skillNodes,{x:centerDelta,scale:.12,autoAlpha:0,duration:.5,stagger:.035},3.6)
-      .to(handoffCard,{autoAlpha:1,scale:1,rotationY:0,duration:.5},3.9);
+      .fromTo(skillHeading,{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:.24},0)
+      .fromTo(coreScene,{x:.735,y:.5,r:.245,opacity:1,decor:1},{x:.5,y:.29,r:.055,opacity:.04,decor:0,duration:.7},0)
+      .to(skillNodes,{autoAlpha:1,scale:1,x:0,y:0,duration:.66,stagger:.055},.08)
+      .to(skillDetails,{autoAlpha:1,y:0,scale:1,duration:.46,stagger:.07},.62)
+      .to(skillNodes,{autoAlpha:0,scale:.55,y:-26,duration:.34,stagger:.035},1.3)
+      .to(skillDetails,{x:detailCenterX,y:detailCenterY,scale:.2,autoAlpha:.2,duration:.55,stagger:.035},1.55)
+      .fromTo(handoffCard,{autoAlpha:0,scale:.28},{autoAlpha:1,scale:1,duration:.4},1.88)
+      .to(skillDetails,{autoAlpha:0,duration:.2},1.98)
+      .to(skillHeading,{autoAlpha:.18,duration:.3},2.15)
+      .to(mergeSummary,{autoAlpha:0,duration:.24},2.34)
+      .to(handoffCard,{width:'18rem',height:'10.6rem',borderRadius:'1rem',duration:.5},2.28)
+      .to(mergeCardFace,{autoAlpha:1,duration:.28},2.5);
 
     const projectTrack=document.querySelector('.project-track');
     const fraudContent=document.querySelector('.fraud-content');
@@ -1394,10 +1463,11 @@ if (window.gsap && window.ScrollTrigger) {
     const projectTimeline=gsap.timeline({
       defaults:{ease:'power2.inOut'},
       scrollTrigger:{
-        trigger:'.project-story',
+        trigger:'.project-stage',
         start:'top top',
         end:'+=3000',
-        pin:'.project-stage',
+        pin:true,
+        pinSpacing:true,
         scrub:1,
         anticipatePin:1,
         invalidateOnRefresh:true,
@@ -1417,11 +1487,11 @@ if (window.gsap && window.ScrollTrigger) {
       .to(cart,{autoAlpha:.13,scale:1.1,duration:.42},1.7);
 
     document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    window.addEventListener('load',ScrollTrigger.refresh,{once:true});
 
     return () => {
-      skillsScrollTrigger=null;
       coreScene.active=false;
-      gsap.set([...skillNodes,...skillDetails,handoffCard,projectTrack,fraudContent,commerceContent,creditCard,cart],{clearProps:'all'});
+      gsap.set([...skillNodes,...skillDetails,handoffCard,mergeSummary,mergeCardFace,projectTrack,fraudContent,commerceContent,creditCard,cart],{clearProps:'all'});
     };
   });
 }
