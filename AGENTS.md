@@ -14,9 +14,11 @@
 - Hero shows “Digen Naik.” on the left and a detailed live particle data core on the right.
 - The core is rendered in canvas from 3D particles, network edges, globe grid lines, orbit rings, glows, and small dashboard accents.
 - The page sequence is Hero → About → Skills → Projects → Experience → Education → Contact.
-- About uses a professional three-step value process: frame the question, build trusted evidence, and translate insight into action.
-- On desktop, the Skills scene pins while the particle core contracts into four compact circular skill nodes. One skill detail panel is active at a time, then the nodes converge into a credit-card handoff.
+- About contains one heading and a concise professional narrative; do not add a separate profile or process panel.
+- The particle core remains fixed on the right while the Hero copy scrolls into About.
+- On desktop, the Skills stage pins itself with pin spacing enabled. The core becomes four circular skill nodes in one row, four rectangular detail panels appear below, the circles disappear, and the four panels converge into one rectangle before reshaping into the credit card.
 - The Projects heading remains visible while a pinned GSAP story pans horizontally from Credit Card Fraud Detection to Brazilian E-Commerce BI Analysis. The background credit card rotates and crossfades into a shopping cart between projects.
+- Skills and Projects must pin their own stage elements inside auto-height parent sections so later sections are pushed down and never overlap a pinned scene.
 - On mobile and with reduced motion, Skills and Projects use a readable vertical layout without pinning.
 - Resume button always targets `resume.pdf` in the repository root. The PDF may be added later.
 
@@ -42,4 +44,4 @@
 ## Current branch
 
 - `agent/hero-particle-core`
-- Contains the particle-core hero, professional About section, compact scroll-driven skill transformation, horizontal two-project story, root-level resume link, theme toggle, and responsive fallbacks.
+- Contains the persistent particle-core Hero/About transition, four-circle/four-rectangle skill transformation, corrected self-pinning scroll stages, horizontal two-project story, root-level resume link, theme toggle, and responsive fallbacks.
