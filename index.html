@@ -866,6 +866,170 @@
     .project-panel { width: 100%; height: auto; padding: 0; }
   }
 
+  /* Unified Skills → Projects morph story */
+  .skills-project-story { height: auto; min-height: 0; padding: 0; }
+  .story-stage {
+    position: relative;
+    height: 100vh;
+    min-height: 720px;
+    overflow: hidden;
+    isolation: isolate;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 50% 50%,rgba(0,229,255,0.055),transparent 38%),
+      linear-gradient(115deg,rgba(124,58,237,0.045),transparent 43%);
+  }
+  .story-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(rgba(0,229,255,0.024) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.024) 1px,transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at center,#000,transparent 82%);
+  }
+  .story-skills-heading { top: clamp(5.5rem,9.5vh,6.4rem); left: clamp(2rem,5.2vw,5.5rem); }
+
+  .story-skill-grid {
+    position: absolute;
+    z-index: 5;
+    top: clamp(10.5rem,20vh,12rem);
+    right: clamp(2rem,3.3vw,4rem);
+    bottom: clamp(2.5rem,5vh,4rem);
+    left: clamp(2rem,3.3vw,4rem);
+    display: grid;
+    grid-template-columns: 1.05fr 1.55fr 0.82fr 1fr;
+    gap: clamp(0.7rem,1vw,1rem);
+    align-items: stretch;
+    perspective: 1200px;
+  }
+  .story-skill-card {
+    --skill-rgb: 0,229,255;
+    position: relative;
+    min-width: 0;
+    padding: clamp(1rem,1.35vw,1.35rem);
+    border: 1px solid rgba(var(--skill-rgb),0.25);
+    border-radius: 1rem;
+    background: linear-gradient(145deg,rgba(var(--skill-rgb),0.075),rgba(5,10,14,0.9) 42%,rgba(10,20,29,0.78));
+    box-shadow: 0 25px 70px rgba(0,0,0,0.26),inset 0 0 42px rgba(var(--skill-rgb),0.025);
+    overflow: hidden;
+    transform-origin: center;
+    will-change: transform,opacity;
+  }
+  .story-skill-card::before { content: ''; position: absolute; left: 0; top: 0; width: 72%; height: 2px; background: linear-gradient(90deg,rgba(var(--skill-rgb),0.95),rgba(var(--skill-rgb),0)); }
+  .story-skill-card::after { content: ''; position: absolute; right: -4rem; bottom: -4rem; width: 9rem; aspect-ratio: 1; border: 1px solid rgba(var(--skill-rgb),0.08); border-radius: 50%; box-shadow: 0 0 0 1.7rem rgba(var(--skill-rgb),0.018),0 0 0 3.4rem rgba(var(--skill-rgb),0.012); }
+  .story-skill-data { --skill-rgb: 167,139,250; }
+  .story-skill-methods { --skill-rgb: 16,185,129; }
+  .story-skill-tools { --skill-rgb: 245,158,11; }
+  .story-skill-card header { position: relative; z-index: 1; display: grid; grid-template-columns: 2.2rem 1fr; gap: 0.72rem; align-items: start; margin-bottom: 1rem; }
+  .story-skill-card header > span { width: 2.1rem; height: 2.1rem; display: grid; place-items: center; border: 1px solid rgba(var(--skill-rgb),0.7); border-radius: 50%; color: rgb(var(--skill-rgb)); font: 0.56rem var(--mono); box-shadow: 0 0 24px rgba(var(--skill-rgb),0.12); }
+  .story-skill-card header p { margin-bottom: 0.18rem; color: rgb(var(--skill-rgb)); font: 0.53rem var(--mono); letter-spacing: 0.16em; }
+  .story-skill-card h3 { margin-bottom: 0.24rem; font-size: clamp(0.92rem,1.12vw,1.15rem); line-height: 1.15; }
+  .story-skill-card header small { color: var(--muted); font: 0.48rem var(--mono); letter-spacing: 0.09em; text-transform: uppercase; }
+  .story-skill-groups { position: relative; z-index: 1; display: grid; gap: 0.68rem; }
+  .story-skill-groups h4 { margin-bottom: 0.36rem; padding-bottom: 0.3rem; border-bottom: 1px solid rgba(var(--skill-rgb),0.18); color: #c4b5fd; font: 0.49rem var(--mono); letter-spacing: 0.09em; text-transform: uppercase; }
+  .story-skill-chips { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0.38rem; list-style: none; }
+  .story-skill-chips li { padding: 0.36rem 0.48rem; border: 1px solid rgba(var(--skill-rgb),0.16); border-radius: 0.32rem; color: #afc0c8; background: rgba(5,10,14,0.45); font-size: clamp(0.61rem,0.7vw,0.71rem); line-height: 1.25; }
+  .story-skill-chips-dense { gap: 0.28rem; }
+  .story-skill-chips-dense li { padding: 0.25rem 0.38rem; font-size: clamp(0.53rem,0.59vw,0.61rem); }
+
+  .story-morph-layer { position: absolute; z-index: 3; inset: 0; pointer-events: none; perspective: 1100px; }
+  .story-credit-card {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: clamp(25rem,36vw,38rem);
+    aspect-ratio: 1.68;
+    padding: 2rem;
+    border: 1px solid rgba(0,229,255,0.72);
+    border-radius: 1.55rem;
+    color: rgba(223,252,255,0.96);
+    background: radial-gradient(circle at 70% 70%,rgba(0,229,255,0.18),transparent 30%),linear-gradient(135deg,#071922,#10233b 48%,#28195d 100%);
+    box-shadow: 0 50px 110px rgba(0,0,0,0.5),0 0 72px rgba(0,229,255,0.11),inset 0 0 50px rgba(0,229,255,0.05);
+    overflow: hidden;
+    transform: translate(-50%,-50%);
+    transform-style: preserve-3d;
+    will-change: transform,opacity;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .story-card-shine { position: absolute; inset: -60% 40% -60% -30%; background: linear-gradient(100deg,transparent,rgba(255,255,255,0.12),transparent); transform: rotate(18deg); }
+  .story-card-chip { position: absolute; top: 29%; left: 10%; width: 3.4rem; height: 2.45rem; border: 1px solid rgba(255,255,255,0.5); border-radius: 0.4rem; background: linear-gradient(90deg,transparent 47%,rgba(255,255,255,0.2) 48% 52%,transparent 53%),linear-gradient(transparent 47%,rgba(255,255,255,0.2) 48% 52%,transparent 53%); }
+  .story-card-signal { position: absolute; top: 29%; left: 23%; width: 2rem; height: 2.4rem; border: 2px solid transparent; border-right-color: rgba(255,255,255,0.55); border-radius: 50%; }
+  .story-credit-card p { position: absolute; top: 12%; right: 9%; color: var(--accent); font: 0.58rem var(--mono); letter-spacing: 0.2em; }
+  .story-credit-card strong { position: absolute; left: 10%; bottom: 25%; font: clamp(0.78rem,1.2vw,1.2rem) var(--mono); letter-spacing: 0.13em; }
+  .story-credit-card small { position: absolute; right: 9%; bottom: 10%; color: #c4b5fd; font: 0.56rem var(--mono); letter-spacing: 0.11em; }
+  .story-shopping-cart { position: absolute; left: 50%; top: 52%; width: min(43vw,42rem); height: auto; fill: none; stroke: url(#storyCartGradient); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 26px rgba(0,229,255,0.22)); transform: translate(-50%,-50%); transform-origin: center; opacity: 0; visibility: hidden; will-change: transform,opacity; }
+  .story-shopping-cart circle { fill: rgba(5,10,14,0.88); }
+  .story-shopping-cart .story-cart-data-line { stroke-width: 1.5; stroke-dasharray: 6 9; opacity: 0.65; }
+
+  .story-project-layer { position: absolute; z-index: 6; inset: 0; opacity: 0; visibility: hidden; }
+  .story-project-heading { position: absolute; z-index: 8; top: clamp(5.5rem,9.5vh,6.4rem); right: clamp(2rem,5.2vw,5.5rem); left: clamp(2rem,5.2vw,5.5rem); display: grid; grid-template-columns: 1fr auto; align-items: center; opacity: 0; visibility: hidden; }
+  .story-project-heading h2 { color: var(--text); font-size: clamp(2.1rem,3vw,3.15rem); line-height: 1; letter-spacing: -0.045em; }
+  .story-project-heading h2::after { content: ''; display: block; width: 3.5rem; height: 1px; margin-top: 0.7rem; background: linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .story-project-count { display: flex; align-items: center; gap: 0.65rem; color: var(--muted); font: 0.62rem var(--mono); }
+  .story-project-count strong { color: var(--accent); font-weight: 400; }
+  .story-project-count i { display: block; width: 3.4rem; height: 1px; background: linear-gradient(90deg,var(--accent),rgba(124,58,237,0.4)); }
+  .story-project-copy-stage { position: absolute; z-index: 7; inset: 0; display: grid; place-items: center; padding: 10rem 5vw 2.3rem; }
+  .story-project-copy { grid-area: 1 / 1; width: min(58rem,72vw); max-height: calc(100vh - 12.5rem); padding: clamp(1.25rem,1.8vw,1.7rem) clamp(1.4rem,2.2vw,2rem); border: 1px solid rgba(0,229,255,0.18); border-radius: 1rem; background: linear-gradient(120deg,rgba(5,10,14,0.76),rgba(5,10,14,0.54)); backdrop-filter: blur(4px); box-shadow: 0 28px 100px rgba(0,0,0,0.26); opacity: 0; visibility: hidden; }
+  .story-project-copy .project-num { margin-bottom: 0.48rem; }
+  .story-project-copy .project-title { margin-bottom: 0.32rem; font-size: clamp(1.9rem,2.7vw,3rem); line-height: 1; letter-spacing: -0.04em; }
+  .story-project-copy .project-link { margin-bottom: 0.62rem; color: var(--accent); }
+  .story-project-copy .project-desc { margin-bottom: 0.72rem; font-size: clamp(0.72rem,0.82vw,0.84rem); line-height: 1.52; }
+  .story-project-copy .project-tech { margin-bottom: 0.72rem; }
+  .story-project-copy .tech-pill { padding: 0.2rem 0.46rem; font-size: 0.6rem; }
+  .story-project-copy .project-highlights { gap: 0.28rem; }
+  .story-project-copy .project-highlights li { font-size: clamp(0.67rem,0.76vw,0.77rem); line-height: 1.4; }
+
+  html[data-theme="light"] .story-skill-card { background: linear-gradient(145deg,rgba(var(--skill-rgb),0.08),rgba(255,255,255,0.92)); }
+  html[data-theme="light"] .story-skill-chips li { color: #3c5864; background: rgba(237,245,247,0.82); }
+  html[data-theme="light"] .story-project-copy { background: rgba(255,255,255,0.72); }
+
+  @media (min-width: 769px) and (max-width: 1280px) {
+    .story-skill-grid { right: 1.5rem; left: 1.5rem; grid-template-columns: 1.02fr 1.5fr 0.82fr 0.98fr; gap: 0.55rem; }
+    .story-skill-card { padding: 0.82rem; }
+    .story-skill-card header { grid-template-columns: 1.8rem 1fr; gap: 0.48rem; }
+    .story-skill-card header > span { width: 1.75rem; height: 1.75rem; }
+    .story-skill-card h3 { font-size: 0.84rem; }
+    .story-skill-card header small { font-size: 0.42rem; }
+    .story-skill-chips li { padding: 0.25rem 0.32rem; font-size: 0.55rem; }
+    .story-skill-chips-dense li { padding: 0.2rem 0.28rem; font-size: 0.49rem; }
+  }
+
+  @media (max-width: 768px) {
+    .skills-project-story { padding: 0; }
+    .story-stage { height: auto; min-height: 0; padding: 5.5rem 1.25rem 4.5rem; overflow: visible; }
+    .story-skills-heading { position: relative; inset: auto; margin: 0 0 2.5rem; }
+    .story-skill-grid { position: relative; inset: auto; grid-template-columns: 1fr; gap: 1rem; }
+    .story-skill-card { min-height: 0; padding: 1.15rem; opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    .story-skill-card h3 { font-size: 1.05rem; }
+    .story-skill-chips li, .story-skill-chips-dense li { font-size: 0.67rem; }
+    .story-morph-layer { display: none; }
+    .story-project-layer { position: relative; inset: auto; margin-top: 5rem; opacity: 1 !important; visibility: visible !important; }
+    .story-project-heading { position: relative; inset: auto; display: block; margin-bottom: 2.5rem; opacity: 1 !important; visibility: visible !important; }
+    .story-project-heading h2 { font-size: clamp(2.35rem,11vw,3.25rem); }
+    .story-project-count { margin-top: 1rem; }
+    .story-project-copy-stage { position: relative; inset: auto; display: grid; gap: 1.25rem; padding: 0; }
+    .story-project-copy { grid-area: auto; width: 100%; max-height: none; padding: 1.2rem; opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    .story-project-copy .project-title { font-size: clamp(2rem,10vw,2.8rem); }
+    .story-project-copy .project-desc { font-size: 0.82rem; }
+    .story-project-copy .project-highlights li { font-size: 0.76rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (min-width: 769px) {
+    .skills-project-story { height: auto; }
+    .story-stage { height: auto; min-height: 0; padding: 7rem 3rem; overflow: visible; }
+    .story-skills-heading { position: relative; inset: auto; width: min(92rem,100%); margin: 0 auto 3rem; }
+    .story-skill-grid { position: relative; inset: auto; width: min(92rem,100%); margin: 0 auto; grid-template-columns: 1.05fr 1.55fr 0.82fr 1fr; }
+    .story-skill-card { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    .story-morph-layer { display: none; }
+    .story-project-layer { position: relative; inset: auto; width: min(92rem,100%); margin: 6rem auto 0; opacity: 1 !important; visibility: visible !important; }
+    .story-project-heading { position: relative; inset: auto; margin-bottom: 3rem; opacity: 1 !important; visibility: visible !important; }
+    .story-project-copy-stage { position: relative; inset: auto; display: grid; gap: 2rem; padding: 0; }
+    .story-project-copy { grid-area: auto; width: 100%; max-height: none; opacity: 1 !important; visibility: visible !important; transform: none !important; }
+  }
+
   @media (hover: none), (pointer: coarse) {
     body, a, button, .project-card, .skill-node { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
@@ -935,75 +1099,63 @@
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills" class="skills-story">
-  <div class="skills-stage">
-    <header class="skills-heading-new">
+<!-- SKILLS + PROJECTS: one continuous transformation scene -->
+<section id="skills" class="skills-project-story">
+  <div class="story-stage">
+    <header class="skills-heading-new story-skills-heading">
       <h2>Skills</h2>
     </header>
 
-    <div class="skill-node-field" aria-label="Skill disciplines">
-      <div class="skill-node skill-node-ba"><span class="skill-node-code">BA</span><strong>BA &amp;<br>Process Tools</strong></div>
-      <div class="skill-node skill-node-data"><span class="skill-node-code">DA</span><strong>Data &amp;<br>Analytics</strong></div>
-      <div class="skill-node skill-node-methods"><span class="skill-node-code">MF</span><strong>Methods &amp;<br>Frameworks</strong></div>
-      <div class="skill-node skill-node-cloud"><span class="skill-node-code">DT</span><strong>Cloud &amp;<br>Dev Tools</strong></div>
-    </div>
-
-    <div class="skill-detail-stack" aria-label="Detailed skills">
-      <article class="skill-detail" data-detail="0">
-        <header><span>01</span><div><h3>BA &amp; Process Tools</h3><p>Discover · align · improve</p></div></header>
-        <p class="skill-rectangle-copy">Requirements gathering · Stakeholder communication · Process improvement · Root-cause analysis · Documentation · Microsoft 365 · SharePoint</p>
+    <div class="story-skill-grid" aria-label="Skills grouped into four connected capabilities">
+      <article class="story-skill-card story-skill-ba">
+        <header><span>01</span><div><p>BA</p><h3>BA &amp; Process Tools</h3><small>Discover · align · improve</small></div></header>
+        <ul class="story-skill-chips">
+          <li>Requirements gathering</li><li>Stakeholder communication</li><li>Process improvement</li><li>Root-cause analysis</li><li>Documentation</li><li>Microsoft 365</li><li>SharePoint</li>
+        </ul>
       </article>
-      <article class="skill-detail" data-detail="1">
-        <header><span>02</span><div><h3>Data &amp; Analytics</h3><p>Query · analyse · communicate</p></div></header>
-        <div class="skill-detail-columns">
-          <div><h4>Analysis &amp; querying</h4><p>SQL · MySQL · MS SQL Server · Excel · Data cleaning · Data validation · Exploratory analysis · Statistical analysis</p></div>
-          <div><h4>Programming &amp; data science</h4><p>Python · Pandas · NumPy · scikit-learn · XGBoost · TensorFlow · Classification · Predictive modelling</p></div>
-          <div><h4>BI &amp; visualization</h4><p>Power BI · Tableau · Excel dashboards · KPI reporting · Data storytelling</p></div>
+
+      <article class="story-skill-card story-skill-data">
+        <header><span>02</span><div><p>DATA</p><h3>Data &amp; Analytics</h3><small>Query · analyse · communicate</small></div></header>
+        <div class="story-skill-groups">
+          <div><h4>Analysis &amp; querying</h4><ul class="story-skill-chips story-skill-chips-dense"><li>SQL</li><li>MySQL</li><li>MS SQL Server</li><li>Excel</li><li>Data cleaning</li><li>Data validation</li><li>Exploratory analysis</li><li>Statistical analysis</li></ul></div>
+          <div><h4>Programming &amp; data science</h4><ul class="story-skill-chips story-skill-chips-dense"><li>Python</li><li>Pandas</li><li>NumPy</li><li>scikit-learn</li><li>XGBoost</li><li>TensorFlow</li><li>Classification</li><li>Predictive modelling</li></ul></div>
+          <div><h4>BI &amp; visualization</h4><ul class="story-skill-chips story-skill-chips-dense"><li>Power BI</li><li>Tableau</li><li>Excel dashboards</li><li>KPI reporting</li><li>Data storytelling</li></ul></div>
         </div>
       </article>
-      <article class="skill-detail" data-detail="2">
-        <header><span>03</span><div><h3>Methods &amp; Frameworks</h3><p>Structure · adapt · deliver</p></div></header>
-        <p class="skill-rectangle-copy">Agile methodology · Waterfall methodology</p>
+
+      <article class="story-skill-card story-skill-methods">
+        <header><span>03</span><div><p>METHODS</p><h3>Methods &amp; Frameworks</h3><small>Structure · adapt · deliver</small></div></header>
+        <ul class="story-skill-chips"><li>Agile methodology</li><li>Waterfall methodology</li></ul>
       </article>
-      <article class="skill-detail" data-detail="3">
-        <header><span>04</span><div><h3>Cloud &amp; Dev Tools</h3><p>Build · version · collaborate</p></div></header>
-        <p class="skill-rectangle-copy">Azure · Git · VS Code · Jupyter Notebook · Windows environments</p>
+
+      <article class="story-skill-card story-skill-tools">
+        <header><span>04</span><div><p>TOOLS</p><h3>Cloud &amp; Dev Tools</h3><small>Build · version · collaborate</small></div></header>
+        <ul class="story-skill-chips"><li>Azure</li><li>Git</li><li>VS Code</li><li>Jupyter Notebook</li><li>Windows environments</li></ul>
       </article>
     </div>
 
-    <div class="skill-handoff-card" aria-hidden="true">
-      <div class="merge-summary"><span>BA</span><span>DATA</span><span>METHODS</span><span>TOOLS</span><b>Connected capability</b></div>
-      <div class="merge-card-face"><span class="merge-chip"></span><i></i><strong>•••• &nbsp; 4082 &nbsp; 7719 &nbsp; 2036</strong><b>DN / ANALYTICS</b></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="project-story">
-  <div class="project-stage">
-    <header class="project-heading">
-      <h2>Projects</h2>
-      <div class="project-count" aria-hidden="true"><strong>01</strong><i></i><span>02</span></div>
-    </header>
-
-    <div class="project-object-layer" aria-hidden="true">
-      <div class="credit-card-object">
-        <div class="card-shine"></div><span class="card-chip"></span><span class="card-signal"></span>
-        <p>FRAUD INTELLIGENCE</p><strong>•••• &nbsp; 4082 &nbsp; 7719 &nbsp; 2036</strong><small>RISK / 0.94</small>
+    <div class="story-morph-layer" aria-hidden="true">
+      <div class="story-credit-card">
+        <div class="story-card-shine"></div><span class="story-card-chip"></span><span class="story-card-signal"></span>
+        <p>FRAUD INTELLIGENCE</p><strong>•••• &nbsp; 4082 &nbsp; 7719 &nbsp; 2036</strong><small>DN / ANALYTICS &nbsp; · &nbsp; RISK 0.94</small>
       </div>
-      <svg class="shopping-cart-object" viewBox="0 0 420 320" role="img" aria-label="Abstract shopping cart">
-        <defs><linearGradient id="cartGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
+      <svg class="story-shopping-cart" viewBox="0 0 420 320" role="img" aria-label="Abstract shopping cart">
+        <defs><linearGradient id="storyCartGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
         <path d="M46 58h45l34 153h185l46-109H110"/><path d="M138 140h184M172 101l-8 110M235 101l3 110M298 101l-14 110"/>
-        <circle cx="164" cy="258" r="20"/><circle cx="295" cy="258" r="20"/><path class="cart-data-line" d="M102 78c58-55 155-61 244-18"/><path class="cart-data-line" d="M126 232c71 35 151 37 214 3"/>
+        <circle cx="164" cy="258" r="20"/><circle cx="295" cy="258" r="20"/><path class="story-cart-data-line" d="M102 78c58-55 155-61 244-18"/><path class="story-cart-data-line" d="M126 232c71 35 151 37 214 3"/>
       </svg>
     </div>
 
-    <div class="project-track">
-      <article class="project-panel fraud-panel">
-        <div class="project-content fraud-content">
+    <section id="projects" class="story-project-layer" aria-labelledby="projects-title">
+      <header class="story-project-heading">
+        <h2 id="projects-title">Projects</h2>
+        <div class="story-project-count" aria-hidden="true"><strong>01</strong><i></i><span>02</span></div>
+      </header>
+
+      <div class="story-project-copy-stage">
+        <article class="story-project-copy fraud-content">
           <p class="project-num">01 / MACHINE LEARNING &amp; BUSINESS ANALYTICS</p>
-          <h3 class="project-title">Credit Card<br>Fraud Detection</h3>
+          <h3 class="project-title">Credit Card Fraud Detection</h3>
           <a href="https://github.com/DIGEN01/credit-card-fraud-detection" target="_blank" rel="noreferrer" class="project-link">View project on GitHub ↗</a>
           <p class="project-desc">Designed and delivered a full end-to-end fraud detection system on real-world transaction data, structured across business question definition, analytical build, and stakeholder-ready recommendations.</p>
           <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">XGBoost</span><span class="tech-pill">TensorFlow</span><span class="tech-pill">Random Forest</span><span class="tech-pill">scikit-learn</span><span class="tech-pill">Tableau</span><span class="tech-pill">SQL</span></div>
@@ -1014,13 +1166,11 @@
             <li>Built an interactive Tableau dashboard for exploring patterns by time, customer segment, and season.</li>
             <li>Delivered an accessible report covering model rationale, decision logic, and estimated business impact.</li>
           </ul>
-        </div>
-      </article>
+        </article>
 
-      <article class="project-panel commerce-panel">
-        <div class="project-content commerce-content">
+        <article class="story-project-copy commerce-content">
           <p class="project-num">02 / BUSINESS INTELLIGENCE &amp; SQL ANALYTICS</p>
-          <h3 class="project-title">Brazilian E-Commerce<br>BI Analysis</h3>
+          <h3 class="project-title">Brazilian E-Commerce BI Analysis</h3>
           <a href="https://github.com/DIGEN01/Brazilian-Ecommerce-Analysis" target="_blank" rel="noreferrer" class="project-link">View project on GitHub ↗</a>
           <p class="project-desc">Analysed 112,650 Olist orders across nine relational tables to uncover customer behaviour patterns and create actionable retention and growth strategies.</p>
           <div class="project-tech"><span class="tech-pill">MySQL</span><span class="tech-pill">Python</span><span class="tech-pill">Power BI</span><span class="tech-pill">scikit-learn</span><span class="tech-pill">K-Means</span><span class="tech-pill">Apriori</span><span class="tech-pill">Decision Tree</span></div>
@@ -1032,9 +1182,9 @@
             <li>Built Power BI dashboards for marketing and operations teams without a data background.</li>
             <li>Produced a structured report with recommendations specific enough to act on immediately.</li>
           </ul>
-        </div>
-      </article>
-    </div>
+        </article>
+      </div>
+    </section>
   </div>
 </section>
 
@@ -1376,7 +1526,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
   ring.style.left   = rx+'px'; ring.style.top  = ry+'px';
   requestAnimationFrame(trackRing);
 })();
-document.querySelectorAll('a, button, .project-card, .edu-card, .skill-tag, .skill-branch, .skill-node').forEach(el => {
+document.querySelectorAll('a, button, .project-card, .edu-card, .skill-tag, .skill-branch, .story-skill-card').forEach(el => {
   el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.transform='translate(-50%,-50%) scale(1.5)'; ring.style.borderColor='rgba(0,229,255,0.8)'; });
   el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; ring.style.borderColor='rgba(0,229,255,0.5)'; });
 });
@@ -1387,41 +1537,42 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
 
-// Pinned skills and horizontal project stories
+// One pinned Skills → Projects transformation story
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   const motionMedia=gsap.matchMedia();
 
   motionMedia.add('(min-width: 769px) and (prefers-reduced-motion: no-preference)',() => {
-    const skillNodes=gsap.utils.toArray('.skill-node');
-    const skillDetails=gsap.utils.toArray('.skill-detail');
-    const skillHeading=document.querySelector('.skills-heading-new');
-    const handoffCard=document.querySelector('.skill-handoff-card');
-    const mergeSummary=document.querySelector('.merge-summary');
-    const mergeCardFace=document.querySelector('.merge-card-face');
-    const nodePositions=[.2,.4,.6,.8];
-    const nodeStartX=index => window.innerWidth*(.735-nodePositions[index]);
-    const nodeStartY=() => window.innerHeight*(.5-.29);
-    const detailCenterX=(index,element) => {
+    const skillCards=gsap.utils.toArray('.story-skill-card');
+    const skillHeading=document.querySelector('.story-skills-heading');
+    const projectLayer=document.querySelector('.story-project-layer');
+    const projectHeading=document.querySelector('.story-project-heading');
+    const creditCard=document.querySelector('.story-credit-card');
+    const cart=document.querySelector('.story-shopping-cart');
+    const fraudContent=document.querySelector('.fraud-content');
+    const commerceContent=document.querySelector('.commerce-content');
+    const projectCount=document.querySelector('.story-project-count strong');
+    const centerOffsetX=(index,element) => {
       const rect=element.getBoundingClientRect();
       return window.innerWidth*.5-(rect.left+rect.width*.5);
     };
-    const detailCenterY=(index,element) => {
+    const centerOffsetY=(index,element) => {
       const rect=element.getBoundingClientRect();
-      return window.innerHeight*.57-(rect.top+rect.height*.5);
+      return window.innerHeight*.52-(rect.top+rect.height*.5);
     };
 
-    gsap.set(skillNodes,{autoAlpha:0,scale:.08,x:nodeStartX,y:nodeStartY});
-    gsap.set(skillDetails,{autoAlpha:0,y:24,scale:.96});
-    gsap.set(handoffCard,{autoAlpha:0,scale:.28,rotationY:0});
-    gsap.set(mergeCardFace,{autoAlpha:0});
+    gsap.set(skillCards,{autoAlpha:0,scale:.06,x:centerOffsetX,y:centerOffsetY,rotationY:0});
+    gsap.set(projectLayer,{autoAlpha:1});
+    gsap.set([projectHeading,fraudContent,commerceContent],{autoAlpha:0});
+    gsap.set(creditCard,{autoAlpha:0,scale:.16,rotationY:0,rotationZ:0});
+    gsap.set(cart,{autoAlpha:0,scale:.4,rotation:-18});
 
-    const skillsTimeline=gsap.timeline({
+    const storyTimeline=gsap.timeline({
       defaults:{ease:'power2.inOut'},
       scrollTrigger:{
-        trigger:'.skills-stage',
+        trigger:'.story-stage',
         start:'top top',
-        end:'+=3200',
+        end:'+=5600',
         pin:true,
         pinSpacing:true,
         scrub:1,
@@ -1429,69 +1580,48 @@ if (window.gsap && window.ScrollTrigger) {
         invalidateOnRefresh:true,
         onEnter:() => { coreScene.active=true; },
         onEnterBack:() => { coreScene.active=true; },
-        onLeave:() => { coreScene.active=false; },
-        onLeaveBack:() => { coreScene.active=false; },
-        onRefresh:self => { coreScene.active=self.isActive; }
+        onLeave:() => { coreScene.active=false; delete document.documentElement.dataset.storyNav; },
+        onLeaveBack:() => { coreScene.active=false; delete document.documentElement.dataset.storyNav; },
+        onRefresh:self => { coreScene.active=self.isActive; },
+        onUpdate:self => {
+          document.documentElement.dataset.storyNav=self.progress<.37?'skills':'projects';
+          if (projectCount) projectCount.textContent=self.progress<.72?'01':'02';
+        }
       }
     });
 
-    skillsTimeline
+    window.portfolioStoryTrigger=storyTimeline.scrollTrigger;
+
+    storyTimeline
       .fromTo(skillHeading,{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:.24},0)
-      .fromTo(coreScene,{x:.735,y:.5,r:.245,opacity:1,decor:1},{x:.5,y:.29,r:.055,opacity:.04,decor:0,duration:.7},0)
-      .to(skillNodes,{autoAlpha:1,scale:1,x:0,y:0,duration:.66,stagger:.055},.08)
-      .to(skillDetails,{autoAlpha:1,y:0,scale:1,duration:.46,stagger:.07},.62)
-      .to(skillNodes,{autoAlpha:0,scale:.55,y:-26,duration:.34,stagger:.035},1.3)
-      .to(skillDetails,{x:detailCenterX,y:detailCenterY,scale:.2,autoAlpha:.2,duration:.55,stagger:.035},1.55)
-      .fromTo(handoffCard,{autoAlpha:0,scale:.28},{autoAlpha:1,scale:1,duration:.4},1.88)
-      .to(skillDetails,{autoAlpha:0,duration:.2},1.98)
-      .to(skillHeading,{autoAlpha:.18,duration:.3},2.15)
-      .to(mergeSummary,{autoAlpha:0,duration:.24},2.34)
-      .to(handoffCard,{width:'18rem',height:'10.6rem',borderRadius:'1rem',duration:.5},2.28)
-      .to(mergeCardFace,{autoAlpha:1,duration:.28},2.5);
-
-    const projectTrack=document.querySelector('.project-track');
-    const fraudContent=document.querySelector('.fraud-content');
-    const commerceContent=document.querySelector('.commerce-content');
-    const creditCard=document.querySelector('.credit-card-object');
-    const cart=document.querySelector('.shopping-cart-object');
-    const projectCount=document.querySelector('.project-count strong');
-
-    gsap.set(commerceContent,{autoAlpha:0,x:95});
-    gsap.set(projectTrack,{xPercent:0});
-    gsap.set(cart,{autoAlpha:0,scale:.35,rotation:-14});
-
-    const projectTimeline=gsap.timeline({
-      defaults:{ease:'power2.inOut'},
-      scrollTrigger:{
-        trigger:'.project-stage',
-        start:'top top',
-        end:'+=3000',
-        pin:true,
-        pinSpacing:true,
-        scrub:1,
-        anticipatePin:1,
-        invalidateOnRefresh:true,
-        onUpdate:self => { if (projectCount) projectCount.textContent=self.progress<.57?'01':'02'; }
-      }
-    });
-
-    projectTimeline
-      .fromTo(creditCard,{autoAlpha:.78,x:() => -window.innerWidth*.25,y:50,scale:.48,rotationY:0,rotationZ:0},{autoAlpha:.74,x:0,y:0,scale:1,rotationY:-10,rotationZ:-3,duration:.42},0)
-      .fromTo(fraudContent,{autoAlpha:0,x:55},{autoAlpha:1,x:0,duration:.34},.14)
-      .to(creditCard,{autoAlpha:.16,scale:1.2,rotationY:16,rotationZ:-1,duration:.52},.5)
-      .to(fraudContent,{autoAlpha:0,x:-90,duration:.32},1.18)
-      .to(projectTrack,{xPercent:-50,duration:.85,ease:'none'},1.18)
-      .to(creditCard,{autoAlpha:0,scale:.25,rotationY:170,rotationZ:12,duration:.66},1.18)
-      .to(cart,{autoAlpha:.2,scale:1,rotation:0,duration:.66},1.28)
-      .to(commerceContent,{autoAlpha:1,x:0,duration:.4},1.62)
-      .to(cart,{autoAlpha:.13,scale:1.1,duration:.42},1.7);
+      .fromTo(coreScene,{x:.735,y:.5,r:.245,opacity:1,decor:1},{x:.5,y:.52,r:.09,opacity:.9,decor:.32,duration:.72},0)
+      .to(skillCards,{autoAlpha:1,scale:1,x:0,y:0,duration:.76,stagger:.055},.2)
+      .to(coreScene,{r:.035,opacity:0,decor:0,duration:.45},.42)
+      .to(skillCards,{x:centerOffsetX,y:centerOffsetY,scale:.08,autoAlpha:.16,rotationY:index => index%2?20:-20,duration:.66,stagger:.035},1.62)
+      .fromTo(creditCard,{autoAlpha:0,scale:.16,rotationY:0},{autoAlpha:.96,scale:.88,rotationY:-8,duration:.5},1.91)
+      .to(skillCards,{autoAlpha:0,duration:.2},2.02)
+      .to(skillHeading,{autoAlpha:0,y:-12,duration:.28},2.02)
+      .to(projectHeading,{autoAlpha:1,y:0,duration:.34},2.12)
+      .to(creditCard,{autoAlpha:.14,scale:1.55,rotationY:12,rotationZ:-2,duration:.5},2.38)
+      .fromTo(fraudContent,{autoAlpha:0,y:30,scale:.97},{autoAlpha:1,y:0,scale:1,duration:.42},2.48)
+      .to(fraudContent,{autoAlpha:1,duration:.72},2.9)
+      .to(fraudContent,{autoAlpha:0,y:-30,scale:.97,duration:.34},3.62)
+      .to(creditCard,{autoAlpha:.96,scale:.92,rotationY:-7,rotationZ:0,duration:.5},3.7)
+      .to(creditCard,{autoAlpha:0,scale:.55,rotationY:92,rotationZ:5,duration:.58},4.18)
+      .fromTo(cart,{autoAlpha:0,scale:.4,rotation:-18},{autoAlpha:.9,scale:.92,rotation:0,duration:.58},4.24)
+      .to(cart,{autoAlpha:.13,scale:1.4,rotation:4,duration:.48},4.8)
+      .fromTo(commerceContent,{autoAlpha:0,y:30,scale:.97},{autoAlpha:1,y:0,scale:1,duration:.42},4.9)
+      .to(commerceContent,{autoAlpha:1,duration:.72},5.3)
+      .to([commerceContent,cart,projectHeading],{autoAlpha:0,duration:.34},6.02);
 
     document.fonts?.ready.then(() => ScrollTrigger.refresh());
     window.addEventListener('load',ScrollTrigger.refresh,{once:true});
 
     return () => {
       coreScene.active=false;
-      gsap.set([...skillNodes,...skillDetails,handoffCard,mergeSummary,mergeCardFace,projectTrack,fraudContent,commerceContent,creditCard,cart],{clearProps:'all'});
+      delete document.documentElement.dataset.storyNav;
+      delete window.portfolioStoryTrigger;
+      gsap.set([...skillCards,skillHeading,projectLayer,projectHeading,fraudContent,commerceContent,creditCard,cart],{clearProps:'all'});
     };
   });
 }
@@ -1507,13 +1637,20 @@ themeToggle.addEventListener('click', () => {
 });
 
 // ── Nav active ───────────────────────────────────────────────────
-const secs = document.querySelectorAll('section[id]');
+const secs = document.querySelectorAll('main > section[id]');
 const navAs = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
-  let cur='';
-  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) cur = s.id; });
+  let cur=document.documentElement.dataset.storyNav || '';
+  if (!cur) secs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) cur = s.id; });
   navAs.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--accent)' : ''; });
 }, { passive: true });
+
+document.querySelector('.nav-links a[href="#projects"]')?.addEventListener('click',event => {
+  const trigger=window.portfolioStoryTrigger;
+  if (!trigger) return;
+  event.preventDefault();
+  window.scrollTo({top:trigger.start+(trigger.end-trigger.start)*.4,behavior:'smooth'});
+});
 </script>
 </body>
 </html>
